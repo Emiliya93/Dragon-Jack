@@ -10,3 +10,9 @@ D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\obj\Debug\DragonJack.pdb
 D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\bin\Debug\DragonJack.exe
 D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\bin\Debug\DragonJack.pdb
 D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
+D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\bin\Debug\DragonJack.exe.config
+D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\DragonJack.exe
+D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\DragonJack.pdb
+D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\bin\Debug\DragonJack.exe
+D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\bin\Debug\DragonJack.pdb
+D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache

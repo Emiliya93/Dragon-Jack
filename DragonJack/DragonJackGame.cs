@@ -70,20 +70,25 @@ namespace DragonJack
 
         public void PrintBack(int x, int y)
         {
-            string[] deckLines = new string[7];
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            string[] deckLines = new string[DragonJackGame.cardHeight];
             deckLines[0] = "┌───────┐";
             deckLines[1] = "│░░░░░░░│";
             deckLines[2] = "│░░░░░░░│";
             deckLines[3] = "│░░░░░░░│";
             deckLines[4] = "│░░░░░░░│";
             deckLines[5] = "│░░░░░░░│";
-            deckLines[6] = "└───────┘";
+            deckLines[6] = "│░░░░░░░│";
+            deckLines[7] = "└───────┘";
 
             for (int i = 0; i < DragonJackGame.cardHeight; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(deckLines[i]);
             }
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
         }
 
         // Print a card
@@ -93,57 +98,64 @@ namespace DragonJack
             Console.ForegroundColor = ConsoleColor.Black;
             string[] cardStrengths = { "A ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "J ", "Q ", "K " };
             string[] cardLines = new string[DragonJackGame.cardHeight];
+            string[] cardSuitLines = new string[4];
             string cardStrength = cardStrengths[this.cardStrength];
-            if (this.cardSuit == 0)
-            {
-                cardLines[0] = "┌───────┐";
-                cardLines[1] = "│" + cardStrength + " _   │";
-                cardLines[2] = "│  ( )  │";
-                cardLines[3] = "│ (_X_) │";
-                cardLines[4] = "│   I   │";
-                cardLines[5] = "│     " + cardStrength + "│";
-                cardLines[6] = "└───────┘";
-            }
-            else if (this.cardSuit == 1)
-            {
-                cardLines[0] = "┌───────┐";
-                cardLines[1] = "│" + cardStrength + " ^   │";
-                cardLines[2] = "│  / \\  │";
-                cardLines[3] = "│  \\ /  │";
-                cardLines[4] = "│   v   │";
-                cardLines[5] = "│     " + cardStrength + "│";
-                cardLines[6] = "└───────┘";
-            }
-            else if (this.cardSuit == 2)
-            {
-                cardLines[0] = "┌───────┐";
-                cardLines[1] = "│" + cardStrength + " ^   │";
-                cardLines[2] = "│  / \\  │";
-                cardLines[3] = "│ (_^_) │";
-                cardLines[4] = "│   I   │";
-                cardLines[5] = "│     " + cardStrength + "│";
-                cardLines[6] = "└───────┘";
-            }
-            else
-            {
-                cardLines[0] = "┌───────┐";
-                cardLines[1] = "│" + cardStrength + "_ _  │";
-                cardLines[2] = "│ ( V ) │";
-                cardLines[3] = "│  \\ /  │";
-                cardLines[4] = "│   V   │";
-                cardLines[5] = "│     " + cardStrength + "│";
-                cardLines[6] = "└───────┘";
-            }
-
+            cardLines[0] = "┌───────┐";
+            cardLines[1] = "│" + cardStrength + "     │";
+            cardLines[2] = "│       │";
+            cardLines[3] = "│       │";
+            cardLines[4] = "│       │";
+            cardLines[5] = "│       │";
+            cardLines[6] = "│     " + cardStrength + "│";
+            cardLines[7] = "└───────┘";
+            
             for (int i = 0; i < DragonJackGame.cardHeight; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(cardLines[i], DragonJackGame.cardWidth);
             }
+            if (this.cardSuit == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                cardSuitLines[0] = "  _  ";
+                cardSuitLines[1] = " ( ) ";
+                cardSuitLines[2] = "(_X_)";
+                cardSuitLines[3] = "  I  ";
+            }
+            else if (this.cardSuit == 1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                cardSuitLines[0] = "  ^  ";
+                cardSuitLines[1] = " / \\ ";
+                cardSuitLines[2] = " \\ / ";
+                cardSuitLines[3] = "  v  ";
+            }
+            else if (this.cardSuit == 2)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                cardSuitLines[0] = "  ^  ";
+                cardSuitLines[1] = " / \\ ";
+                cardSuitLines[2] = "(_^_)";
+                cardSuitLines[3] = "  I  ";
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                cardSuitLines[0] = " _ _ ";
+                cardSuitLines[1] = "( V )";
+                cardSuitLines[2] = " \\ / ";
+                cardSuitLines[3] = "  V  ";
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Console.SetCursorPosition(x + 2, y + 2 + i);
+                Console.WriteLine(cardSuitLines[i]);
+            }
+            Console.ForegroundColor = ConsoleColor.Black;
         }
     }
 
-    class CardHand
+    class Hand
     {
         List<Card> cards = new List<Card>();
 
@@ -175,31 +187,48 @@ namespace DragonJack
         public int GetSum()
         {
             int sum = 0;
-
+            int acesSum = 0;
             foreach (var card in cards)
             {
                 sum += card.CardValue;
+                if (card.CardValue == 11)
+                {
+                    acesSum = sum - 10;
+                }
             }
-
-            int acesCount = 0;
             if (sum > 21)
             {
-                acesCount = AcesCount();
-                if (acesCount != 0)
+                int acesCount = AcesCount();
+                while (acesCount > 0 && sum > 21)
                 {
                     sum -= 10;
                     acesCount--;
-                    //do
-                    //{
-                    //    sum -= 10;
-                    //    acesCount--;
-                    //} while (sum > 21);
                 }
             }
             return sum;
         }
 
-        public bool AreThereEqualCards()
+        public void PrintSum()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            string sums;
+            int fullSum = 0;
+            foreach (var card in cards)
+            {
+                fullSum += card.CardValue;
+            }
+            sums = GetSum().ToString() + "   ";
+            int acesCount = AcesCount();
+            if (fullSum - (acesCount - 1) * 10 < 21 && acesCount > 0)
+            {
+                sums = (fullSum - acesCount * 10).ToString() + "/" + GetSum().ToString() + " ";
+            }
+            
+            Console.WriteLine(sums);
+        }
+
+        public bool AreEqualCards()
         {
             if (cards[0].CardStrength == cards[1].CardStrength)
             {
@@ -208,7 +237,7 @@ namespace DragonJack
             return false;
         }
 
-        public bool IsThereDragonJack()
+        public bool IsDragonJack()
         {
             if (cards[0].CardValue + cards[1].CardValue == 21)
 	        {
@@ -223,52 +252,61 @@ namespace DragonJack
         public static Random random = new Random();
         public static int winWidth = 120;
         public static int winHeight = 40;
-        // 105 = 21 cards max
-        public static int dealerPositionX = (winWidth - 105) / 2;
-        public static int dealerPositionY = winHeight / 10;
-        public static int cardHeight = 7;
+        // 95 = 19 cards max
+        public static int dealerPosX = (winWidth - 95) / 2;
+        public static int dealerPosY = winHeight / 10;
+        public static int cardHeight = 8;
         public static int cardWidth = 10;
-        public static int playerPositionX = (winWidth - 105) / 2;
-        public static int playerPositionY = winHeight - winHeight / 10 - cardHeight;
+        public static int playerPosX = (winWidth - 95) / 2;
+        public static int playerPosY = winHeight - winHeight / 10 - cardHeight;
+        public static int legendPosX = 5;
+        public static int legendPosY = 17;
         public static int decksCount = 6;
         public static int suitsCount = 4;
         public static int cardStrengthsCount = 13;
 
         static void Main()
         {
+            Console.CursorVisible = false;
             // Set console width and height
             InitializeConsoleScreen();
 
             // Get new deck made of 6 decks
             int[,] deck = NewDeck();
 
-            CardHand playerCards = new CardHand();
-            CardHand dealerCards = new CardHand();
+            Hand playerCards = new Hand();
+            Hand dealerCards = new Hand();
             // Initial dealing
             playerCards.FillHand(new Card(deck));
+            Thread.Sleep(500);
+            playerCards.GetCardsInHand()[0].PrintCard(playerPosX, playerPosY);
+            Console.SetCursorPosition(playerPosX - 7, playerPosY);
+            playerCards.PrintSum();
+
             dealerCards.FillHand(new Card(deck));
+            Thread.Sleep(500);
+            dealerCards.GetCardsInHand()[0].PrintCard(dealerPosX, dealerPosY);
+            Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
+            dealerCards.PrintSum();
+
             playerCards.FillHand(new Card(deck));
-            dealerCards.FillHand(new Card(deck));
+            Thread.Sleep(500);
+            playerCards.GetCardsInHand()[1].PrintCard(playerPosX + 5, playerPosY);
+            Console.SetCursorPosition(playerPosX - 7, playerPosY);
+            playerCards.PrintSum();
 
-            playerCards.GetCardsInHand()[0].PrintCard(playerPositionX, playerPositionY);
-            playerCards.GetCardsInHand()[1].PrintCard(playerPositionX + 5, playerPositionY);
-            dealerCards.GetCardsInHand()[0].PrintCard(dealerPositionX, dealerPositionY);
-            dealerCards.GetCardsInHand()[1].PrintBack(dealerPositionX + 5, dealerPositionY);
-
-            Console.SetCursorPosition(playerPositionX - 3, playerPositionY);
-            Console.WriteLine(playerCards.GetSum());
-
-            Console.SetCursorPosition(dealerPositionX - 3, dealerPositionY);
-            Console.WriteLine(dealerCards.GetSum());
+            Thread.Sleep(500);
+            dealerCards.GetCardsInHand()[0].PrintBack(dealerPosX + 5, dealerPosY);
+            
             //for (int i = 0; i < 11; i++)
             //{
             //    printCard(i, (winWidth - 55) / 2 + i * 5, winHeight - 7 - winHeight / 10);
             //}
 
             // Print options acording to the cards we have
-            PrintLegend(playerCards.AreThereEqualCards());
+            PrintLegend(playerCards.AreEqualCards());
 
-            ConsoleKeyInfo key = Console.ReadKey();
+            ConsoleKeyInfo key = Console.ReadKey(true);
             //do
             //{
             //    key = Console.ReadKey();
@@ -287,21 +325,28 @@ namespace DragonJack
             {
                 switch (key.Key)
                 {
-                    case ConsoleKey.Spacebar: if (playerCards.AreThereEqualCards()) { /*TODO: Implement Split;Print Cards(each Part on new line)*/  } break;
-                    case ConsoleKey.Z: HittingMethod(playerCards, deck); break;
-                    case ConsoleKey.X: StandingMethod(dealerCards, deck); break;
+                    case ConsoleKey.Spacebar: 
+                        if (playerCards.AreEqualCards()) { /*TODO: Implement Split;Print Cards(each Part on new line)*/  } break;
+                    case ConsoleKey.Z: 
+                        Hitting(playerCards, deck);
+                        if (playerCards.GetSum() >= 21)
+                        {
+                            DealerPlay(dealerCards, playerCards, deck);
+                            break;
+                        }
+                        break;
+                    case ConsoleKey.X: 
+                        DealerPlay(dealerCards, playerCards, deck); break;
                     case ConsoleKey.C: /*TODO: Implement Double*/ break;
-                    default: Console.WriteLine("Invalid command!"); break;
+                    default: Console.SetCursorPosition(20, 20);
+                             Console.WriteLine("Invalid command!"); break;
                     // TODO: Bets
                     //Another TODO: Check win, push or bust...
                 }
 
-                key = Console.ReadKey();
+                key = Console.ReadKey(true);
             }
 
-            //TODO: Make "Press any key to continue" disappear!
-            //Console.ReadKey();
-            //Console.CursorVisible = false;
         }
 
         static void InitializeConsoleScreen()
@@ -312,26 +357,29 @@ namespace DragonJack
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.Black;
-            PrintDeck(winWidth - winWidth / cardWidth, (winHeight - 3) / 2);
+            PrintDeck(winWidth - winWidth / cardWidth, (winHeight - 5) / 2);
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
         }
 
-        static void HittingMethod(CardHand playerCards, int[,] deck)
+        static void Hitting(Hand playerCards, int[,] deck)
         {
             playerCards.FillHand(new Card(deck));
             int playerCardIndex = playerCards.GetCardsInHand().Count - 1;
 
             playerCards.GetCardsInHand()[playerCardIndex]
-                       .PrintCard(playerPositionX + playerCardIndex * 5, playerPositionY);
+                       .PrintCard(playerPosX + playerCardIndex * 5, playerPosY);
 
-            Console.SetCursorPosition(playerPositionX - 3, playerPositionY);
-            Console.WriteLine(playerCards.GetSum());
+            Console.SetCursorPosition(playerPosX - 7, playerPosY);
+            playerCards.PrintSum();
         }
 
-        static void StandingMethod(CardHand dealerCards, int[,] deck)
+        static void DealerPlay(Hand dealerCards, Hand playerCards, int[,] deck)
         {
-            dealerCards.GetCardsInHand()[1].PrintCard(dealerPositionX + 5, dealerPositionY);
+            dealerCards.FillHand(new Card(deck));
+            dealerCards.GetCardsInHand()[1].PrintCard(dealerPosX + 5, dealerPosY);
+            Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
+            dealerCards.PrintSum();
             // With this two conditions,the while loop is infinite, so removed <= 21
             //while (dealerCards.GetSum() <= 21)
             //{
@@ -346,28 +394,37 @@ namespace DragonJack
             //    }
             //}
 
-            
-            
+            if (playerCards.GetSum() > 21)
+            {
+                //Console.SetCursorPosition(dealerPositionX - 7, dealerPositionY);
+                //Console.WriteLine(dealerCards.GetSum() + "   ");
+                return;
+            }
             while (dealerCards.GetSum() < 17)
             {
-                Thread.Sleep(1000);
+                
+                Thread.Sleep(800);
                 dealerCards.FillHand(new Card(deck));
                 int dealerCardIndex = dealerCards.GetCardsInHand().Count - 1;
 
                 dealerCards.GetCardsInHand()[dealerCardIndex]
-                           .PrintCard(dealerPositionX + dealerCardIndex * 5, dealerPositionY);
-                Thread.Sleep(1000);
+                           .PrintCard(dealerPosX + dealerCardIndex * 5, dealerPosY);
+                Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
+                dealerCards.PrintSum();
+                //Thread.Sleep(1000);
                 //for (int i = playerCards.GetCardsInHand().Count - 1; i < playerCards.GetCardsInHand().Count; i++)
                 //{
 
                 //}
             }
-            Console.SetCursorPosition(dealerPositionX - 3, dealerPositionY);
-            Console.WriteLine(dealerCards.GetSum());
+            //Console.SetCursorPosition(dealerPositionX - 7, dealerPositionY);
+            //Console.WriteLine(dealerCards.GetSum() + "   ");
         }
 
         private static void PrintLegend(bool printSplit)
         {
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             List<string> options = new List<string>();
             options.Add("Z -> Hit");
             options.Add("X -> Stand");
@@ -378,11 +435,10 @@ namespace DragonJack
                 options.Add("Space -> Split");
             }
 
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            
             for (int i = 0; i < options.Count; i++)
             {
-                Console.SetCursorPosition(5, 17 + (i * 2));
+                Console.SetCursorPosition(legendPosX, legendPosY + (i * 2));
                 Console.WriteLine(options[i]);
                 Console.WriteLine();
             }
@@ -406,18 +462,21 @@ namespace DragonJack
 
         static void PrintDeck (int x, int y)
         {
-            string[] deckLines = new string[7];
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            string[] deckLines = new string[DragonJackGame.cardHeight];
             deckLines[0] = "┌───────┐";
             deckLines[1] = "║░░░░░░░│";
             deckLines[2] = "║░░░░░░░│";
             deckLines[3] = "║░░░░░░░│";
             deckLines[4] = "║░░░░░░░│";
             deckLines[5] = "║░░░░░░░│";
-            deckLines[6] = "╚═══════┘";
+            deckLines[6] = "║░░░░░░░│";
+            deckLines[7] = "╚═══════┘";
 
             for (int i = 0; i < cardHeight; i++)
             {
-                Console.SetCursorPosition(x, y + i);
+                Console.SetCursorPosition(x, y - 1 + i);
                 Console.WriteLine(deckLines[i]);
             }
         }
