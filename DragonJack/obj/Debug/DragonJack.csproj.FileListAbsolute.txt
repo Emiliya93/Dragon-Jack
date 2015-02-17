@@ -4,3 +4,9 @@ C:\Users\PavelPC\Desktop\Visual\telerik\CS2\TeamWork\DragonJack\GhostDragon\Drag
 C:\Users\PavelPC\Desktop\Visual\telerik\CS2\TeamWork\DragonJack\GhostDragon\DragonJack\bin\Debug\DragonJack.pdb
 C:\Users\PavelPC\Desktop\Visual\telerik\CS2\TeamWork\DragonJack\GhostDragon\DragonJack\obj\Debug\DragonJack.exe
 C:\Users\PavelPC\Desktop\Visual\telerik\CS2\TeamWork\DragonJack\GhostDragon\DragonJack\obj\Debug\DragonJack.pdb
+D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\bin\Debug\DragonJack.exe.config
+D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\obj\Debug\DragonJack.exe
+D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\obj\Debug\DragonJack.pdb
+D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\bin\Debug\DragonJack.exe
+D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\bin\Debug\DragonJack.pdb
+D:\Users\Emi\GitHub\Dragon-Jack\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache

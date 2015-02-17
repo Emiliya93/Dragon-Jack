@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+
 namespace DragonJack
 {
     class Card
@@ -10,8 +11,7 @@ namespace DragonJack
         private int cardValue;
         private int cardSuit;
 
-
-        //Get methods for card fields
+        // Get methods for card fields
         public int CardStrength
         {
             get
@@ -34,7 +34,7 @@ namespace DragonJack
             }
         }
 
-        //Get a random card from the deck
+        // Get a random card from the deck
         public Card(int[,] deck)
         {
             int[] result = new int[3];
@@ -79,20 +79,20 @@ namespace DragonJack
             deckLines[5] = "│░░░░░░░│";
             deckLines[6] = "└───────┘";
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < DragonJackGame.cardHeight; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(deckLines[i]);
             }
         }
 
-        //Neshto si
+        // Print a card
         public void PrintCard(int x, int y)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             string[] cardStrengths = { "A ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "J ", "Q ", "K " };
-            string[] cardLines = new string[7];
+            string[] cardLines = new string[DragonJackGame.cardHeight];
             string cardStrength = cardStrengths[this.cardStrength];
             if (this.cardSuit == 0)
             {
@@ -141,8 +141,8 @@ namespace DragonJack
                 Console.WriteLine(cardLines[i], DragonJackGame.cardWidth);
             }
         }
-
     }
+
     class CardHand
     {
         List<Card> cards = new List<Card>();
@@ -223,54 +223,17 @@ namespace DragonJack
         public static Random random = new Random();
         public static int winWidth = 120;
         public static int winHeight = 40;
+        // 105 = 21 cards max
         public static int dealerPositionX = (winWidth - 105) / 2;
         public static int dealerPositionY = winHeight / 10;
         public static int cardHeight = 7;
         public static int cardWidth = 10;
         public static int playerPositionX = (winWidth - 105) / 2;
         public static int playerPositionY = winHeight - winHeight / 10 - cardHeight;
+        public static int decksCount = 6;
+        public static int suitsCount = 4;
+        public static int cardStrengthsCount = 13;
 
-        static void InitializeConsoleScreen()
-        {
-            Console.BufferHeight = winHeight;
-            Console.BufferWidth = winWidth;
-            Console.SetWindowSize(winWidth, winHeight);
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
-            Console.Clear();
-            Console.BackgroundColor = ConsoleColor.Black;
-            printDeck(winWidth - winWidth / 10, (winHeight - 3) / 2);
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
-        }
-
-        static void HittingMethod(CardHand playerCards, int [,] deck)
-        {
-            playerCards.FillHand(new Card(deck));
-            int playerCardIndex = playerCards.GetCardsInHand().Count - 1;
-            playerCards.GetCardsInHand()[playerCardIndex]
-                       .PrintCard(playerPositionX + playerCardIndex * 5, playerPositionY);
-            Console.SetCursorPosition(playerPositionX - 3, playerPositionY);
-            Console.WriteLine(playerCards.GetSum());
-        }
-        static void StandingMethod(CardHand playerCards, int[,] deck)
-        {
-            playerCards.GetCardsInHand()[1].PrintCard(dealerPositionX + 5, dealerPositionY);
-            while (playerCards.GetSum() <= 21)
-            {
-                if (playerCards.GetSum() < 17)
-                {
-                    Thread.Sleep(1000);
-                    playerCards.FillHand(new Card(deck));
-
-                    playerCards.GetCardsInHand()[playerCards.GetCardsInHand().Count - 1].PrintCard(dealerPositionX + (playerCards.GetCardsInHand().Count - 1) * 5, dealerPositionY);
-                    Thread.Sleep(1000);
-                    //for (int i = playerCards.GetCardsInHand().Count - 1; i < playerCards.GetCardsInHand().Count; i++)
-                    //{
-                        
-                    //}
-                }
-            }
-        }
         static void Main()
         {
             // Set console width and height
@@ -294,38 +257,113 @@ namespace DragonJack
 
             Console.SetCursorPosition(playerPositionX - 3, playerPositionY);
             Console.WriteLine(playerCards.GetSum());
-            //TODO: remove that thing
 
+            Console.SetCursorPosition(dealerPositionX - 3, dealerPositionY);
+            Console.WriteLine(dealerCards.GetSum());
             //for (int i = 0; i < 11; i++)
             //{
             //    printCard(i, (winWidth - 55) / 2 + i * 5, winHeight - 7 - winHeight / 10);
             //}
 
             // Print options acording to the cards we have
-            
             PrintLegend(playerCards.AreThereEqualCards());
-            ConsoleKeyInfo key;
-            do
+
+            ConsoleKeyInfo key = Console.ReadKey();
+            //do
+            //{
+            //    key = Console.ReadKey();
+            //    switch (key.Key)
+            //    {
+            //        case ConsoleKey.Spacebar: if (playerCards.AreThereEqualCards()) { /*TODO: Implement Split;Print Cards(each Part on new line)*/  } break;
+            //        case ConsoleKey.Z: HittingMethod(playerCards, deck); break;
+            //        case ConsoleKey.X: StandingMethod(dealerCards, deck); break;
+            //        case ConsoleKey.C: /*TODO: Implement Double*/ break;
+            //        default: Console.WriteLine("Invalid command!"); break;
+            //        // TODO: Bets
+            //        //Another TODO: Check win, push or bust...
+            //    }
+            //} while (key.Key != ConsoleKey.Escape);
+            while (key.Key != ConsoleKey.Escape)
             {
-                key = Console.ReadKey();
                 switch (key.Key)
                 {
                     case ConsoleKey.Spacebar: if (playerCards.AreThereEqualCards()) { /*TODO: Implement Split;Print Cards(each Part on new line)*/  } break;
-                    case ConsoleKey.Z:
-                        {
-                            HittingMethod(playerCards, deck);
-                            break;
-                        }
+                    case ConsoleKey.Z: HittingMethod(playerCards, deck); break;
                     case ConsoleKey.X: StandingMethod(dealerCards, deck); break;
                     case ConsoleKey.C: /*TODO: Implement Double*/ break;
+                    default: Console.WriteLine("Invalid command!"); break;
                     // TODO: Bets
-                        //Another TODO: Check win, push or bust...
-
+                    //Another TODO: Check win, push or bust...
                 }
-            } while (key.Key != ConsoleKey.Escape);
 
+                key = Console.ReadKey();
+            }
+
+            //TODO: Make "Press any key to continue" disappear!
             //Console.ReadKey();
             //Console.CursorVisible = false;
+        }
+
+        static void InitializeConsoleScreen()
+        {
+            Console.BufferHeight = winHeight;
+            Console.BufferWidth = winWidth;
+            Console.SetWindowSize(winWidth, winHeight);
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.Black;
+            PrintDeck(winWidth - winWidth / cardWidth, (winHeight - 3) / 2);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+        }
+
+        static void HittingMethod(CardHand playerCards, int[,] deck)
+        {
+            playerCards.FillHand(new Card(deck));
+            int playerCardIndex = playerCards.GetCardsInHand().Count - 1;
+
+            playerCards.GetCardsInHand()[playerCardIndex]
+                       .PrintCard(playerPositionX + playerCardIndex * 5, playerPositionY);
+
+            Console.SetCursorPosition(playerPositionX - 3, playerPositionY);
+            Console.WriteLine(playerCards.GetSum());
+        }
+
+        static void StandingMethod(CardHand dealerCards, int[,] deck)
+        {
+            dealerCards.GetCardsInHand()[1].PrintCard(dealerPositionX + 5, dealerPositionY);
+            // With this two conditions,the while loop is infinite, so removed <= 21
+            //while (dealerCards.GetSum() <= 21)
+            //{
+            //    if (dealerCards.GetSum() < 17)
+            //    {
+            //        Thread.Sleep(1000);
+            //        dealerCards.FillHand(new Card(deck));
+
+            //        dealerCards.GetCardsInHand()[dealerCards.GetCardsInHand().Count - 1]
+            //          .PrintCard(dealerPositionX + (dealerCards.GetCardsInHand().Count - 1) * 5, dealerPositionY);
+            //        Thread.Sleep(1000);
+            //    }
+            //}
+
+            
+            
+            while (dealerCards.GetSum() < 17)
+            {
+                Thread.Sleep(1000);
+                dealerCards.FillHand(new Card(deck));
+                int dealerCardIndex = dealerCards.GetCardsInHand().Count - 1;
+
+                dealerCards.GetCardsInHand()[dealerCardIndex]
+                           .PrintCard(dealerPositionX + dealerCardIndex * 5, dealerPositionY);
+                Thread.Sleep(1000);
+                //for (int i = playerCards.GetCardsInHand().Count - 1; i < playerCards.GetCardsInHand().Count; i++)
+                //{
+
+                //}
+            }
+            Console.SetCursorPosition(dealerPositionX - 3, dealerPositionY);
+            Console.WriteLine(dealerCards.GetSum());
         }
 
         private static void PrintLegend(bool printSplit)
@@ -337,14 +375,14 @@ namespace DragonJack
 
             if (printSplit)
             {
-                //Console.SetCursorPosition();
                 options.Add("Space -> Split");
             }
+
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.ForegroundColor = ConsoleColor.Yellow;
             for (int i = 0; i < options.Count; i++)
             {
-                Console.SetCursorPosition(5, 18 + (i * 2));
+                Console.SetCursorPosition(5, 17 + (i * 2));
                 Console.WriteLine(options[i]);
                 Console.WriteLine();
             }
@@ -355,18 +393,18 @@ namespace DragonJack
         // Parameters - Player's cards, Output - void
         static int[,] NewDeck()
         {
-            int[,] deck = new int[4, 13];
-            for (int i = 0; i < 4; i++)
+            int[,] deck = new int[suitsCount, cardStrengthsCount];
+            for (int i = 0; i < deck.GetLength(0); i++)
             {
-                for (int j = 0; j < 13; j++)
+                for (int j = 0; j < deck.GetLength(1); j++)
                 {
-                    deck[i, j] = 6;
+                    deck[i, j] = decksCount;
                 }
             }
             return deck;
         }
 
-        static void printDeck(int x, int y)
+        static void PrintDeck (int x, int y)
         {
             string[] deckLines = new string[7];
             deckLines[0] = "┌───────┐";
@@ -377,7 +415,7 @@ namespace DragonJack
             deckLines[5] = "║░░░░░░░│";
             deckLines[6] = "╚═══════┘";
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < cardHeight; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(deckLines[i]);
