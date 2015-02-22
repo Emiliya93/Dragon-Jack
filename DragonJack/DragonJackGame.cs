@@ -271,6 +271,16 @@ namespace DragonJack
 
         static void Main()
         {
+            //TODO: Catch exception
+            //Unhandled Exception: System.ArgumentOutOfRangeException: The value must be less than the console's current maximum window size of 113 in that dimensio
+            //n. Note that this value depends on screen resolution and the console font.
+            //Parameter name: width
+            //Actual value was 150.
+            //   at System.Console.SetWindowSize(Int32 width, Int32 height)
+            //   at DragonJack.DragonJackGame.IntroScreen() in c:\Users\ilia\Downloads\Dragon-Jack-master\Dragon-Jack-master\DragonJack\DragonJackGame.cs:line 670
+            //   at DragonJack.DragonJackGame.Main() in c:\Users\ilia\Downloads\Dragon-Jack-master\Dragon-Jack-master\DragonJack\DragonJackGame.cs:line 278
+            //Press any key to continue . . .
+
             Console.CursorVisible = false;
             //IntroScreen();
             InitializeConsoleScreen();
