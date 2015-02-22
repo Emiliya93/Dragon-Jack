@@ -108,7 +108,7 @@ namespace DragonJack
             cardLines[5] = "│       │";
             cardLines[6] = "│     " + cardStrength + "│";
             cardLines[7] = "└───────┘";
-            
+
             for (int i = 0; i < DragonJackGame.cardHeight; i++)
             {
                 Console.SetCursorPosition(x, y + i);
@@ -224,7 +224,7 @@ namespace DragonJack
             {
                 sums = (fullSum - acesCount * 10).ToString() + "/" + GetSum().ToString() + " ";
             }
-            
+
             Console.WriteLine(sums);
         }
 
@@ -240,9 +240,9 @@ namespace DragonJack
         public bool IsDragonJack()
         {
             if (cards[0].CardValue + cards[1].CardValue == 21)
-	        {
+            {
                 return true;
-	        }
+            }
             return false;
         }
     }
@@ -250,32 +250,29 @@ namespace DragonJack
     public class DragonJackGame
     {
         public static Random random = new Random();
-        public static int winWidth = 160;
-        public static int winHeight = 40;
-        public static int cardHeight = 8;
-        public static int cardWidth = 10;
-        public static int suitsCount = 4;
-        public static int cardStrengthsCount = 13;
-        public static int decksCount = 6;
-        public static int maxCardsWidth = (8 + (decksCount - 1)) * 5;
-        public static int dealerPosX = (winWidth - maxCardsWidth) / 2;
-        public static int dealerPosY = winHeight / 10;
-        public static int playerPosX = (winWidth - maxCardsWidth) / 2;
-        public static int playerPosY = winHeight - winHeight / 10 - cardHeight;
-        public static int doublePosX1 = (winWidth - (maxCardsWidth) * 2) / 4;
-        public static int doublePosY1 = playerPosY;
-        public static int doublePosX2 = doublePosX1 + maxCardsWidth + doublePosX1;
-        public static int doublePosY2 = playerPosY;
-        public static int legendPosX = 5;
-        public static int legendPosY = 17;
-        
-        
-        
+        public const int winWidth = 152;
+        public const int winHeight = 40;
+        public const int cardHeight = 8;
+        public const int cardWidth = 10;
+        public const int suitsCount = 4;
+        public const int cardStrengthsCount = 13;
+        public const int decksCount = 6;
+        public const int maxCardsWidth = (8 + (decksCount - 1)) * 5;
+        public const int dealerPosX = (winWidth - maxCardsWidth) / 2;
+        public const int dealerPosY = winHeight / 10;
+        public const int playerPosX = (winWidth - maxCardsWidth) / 2;
+        public const int playerPosY = winHeight - winHeight / 10 - cardHeight;
+        public const int doublePosX1 = (winWidth - (maxCardsWidth) * 2) / 4;
+        public const int doublePosY1 = playerPosY;
+        public const int doublePosX2 = doublePosX1 + maxCardsWidth + doublePosX1;
+        public const int doublePosY2 = playerPosY;
+        public const int legendPosX = 5;
+        public const int legendPosY = 17;
 
         static void Main()
         {
             Console.CursorVisible = false;
-            IntroScreen();
+            //IntroScreen();
             InitializeConsoleScreen();
 
             // Get new deck made of 6 decks
@@ -306,12 +303,7 @@ namespace DragonJack
             Thread.Sleep(500);
             dealerCards.GetCardsInHand()[1].PrintBack(dealerPosX + 5, dealerPosY);
 
-            if (playerCards.IsDragonJack() ^ dealerCards.IsDragonJack())
-            {
-                DragonJacking(dealerCards);
-                Console.ReadKey(true);
-                return;
-            }
+
             //for (int i = 0; i < 11; i++)
             //{
             //    printCard(i, (winWidth - 55) / 2 + i * 5, winHeight - 7 - winHeight / 10);
@@ -319,7 +311,12 @@ namespace DragonJack
 
             // Print options acording to the cards we have
             PrintLegend(playerCards.AreEqualCards(), playerCards.GetCardsInHand().Count);
-            
+
+            if (playerCards.IsDragonJack() || dealerCards.IsDragonJack())
+            {
+                DragonJacking(dealerCards);
+                //Console.ReadKey(true);
+            }
 
             ConsoleKeyInfo key = Console.ReadKey(true);
             //do
@@ -337,11 +334,10 @@ namespace DragonJack
             //    }
             //} while (key.Key != ConsoleKey.Escape);
 
-            while (key.Key != ConsoleKey.Escape )
+            while (!IsGameOver(playerCards.GetSum(), dealerCards.GetSum(), playerCards.IsDragonJack(), dealerCards.IsDragonJack()))
             {
                 switch (key.Key)
                 {
-
                     case ConsoleKey.Spacebar:
                         DeleteLegend();
                         PrintLegend(false, playerCards.GetCardsInHand().Count + 1);
@@ -356,7 +352,7 @@ namespace DragonJack
                             InvalidInput();
                         }
                         break;
-                    case ConsoleKey.Z: 
+                    case ConsoleKey.Z:
                         Hitting(playerCards, deck, playerPosX, playerPosY);
                         DeleteLegend();
                         PrintLegend(false, playerCards.GetCardsInHand().Count);
@@ -371,21 +367,21 @@ namespace DragonJack
                         DeleteLegend();
                         DealerPlay(dealerCards, playerCards.GetSum(), deck); break;
                     case ConsoleKey.C: /*TODO: Implement Double*/ break;
-                    default: InvalidInput(); 
-                             break;
+                    default: InvalidInput();
+                        break;
                     // TODO: Bets
                     //Another TODO: Check win, push or bust...
                 }
 
                 key = Console.ReadKey(true);
             }
-
+            // TODO: Make whole main in one while loop(until escape key is pressed)
         }
 
         static void InitializeConsoleScreen()
         {
-            //Console.WindowHeight = winHeight;
-            //Console.WindowWidth = winWidth;
+            Console.WindowHeight = winHeight;
+            Console.WindowWidth = winWidth;
             Console.BufferHeight = winHeight;
             Console.BufferWidth = winWidth;
             Console.SetWindowSize(winWidth, winHeight);
@@ -436,7 +432,7 @@ namespace DragonJack
             }
             while (dealerCards.GetSum() < 17)
             {
-                
+
                 Thread.Sleep(800);
                 dealerCards.FillHand(new Card(deck));
                 int dealerCardIndex = dealerCards.GetCardsInHand().Count - 1;
@@ -455,7 +451,7 @@ namespace DragonJack
             //Console.WriteLine(dealerCards.GetSum() + "   ");
         }
 
-        static int Splitting( Hand playerCards, int[,] deck)
+        static int Splitting(Hand playerCards, int[,] deck)
         {
             DeleteCardAndSum(playerPosX, playerPosY);
             DeleteCardAndSum(playerPosX + 5, playerPosY);
@@ -486,7 +482,7 @@ namespace DragonJack
             Console.SetCursorPosition(doublePosX2 - 7, doublePosY2);
             playerCards2.PrintSum();
 
-            if (playerCards1.GetSum() < 21 || playerCards2.GetSum() < 21 )
+            if (playerCards1.GetSum() < 21 || playerCards2.GetSum() < 21)
             {
                 bool playDouble = true;
                 while (playDouble)
@@ -508,7 +504,7 @@ namespace DragonJack
                                         key = Console.ReadKey(true);
                                         while (key.Key != ConsoleKey.Escape)
                                         {
-                                            
+
                                             switch (key.Key)
                                             {
                                                 case ConsoleKey.Z:
@@ -592,7 +588,7 @@ namespace DragonJack
                                 break;
                             }
                         }
-                        
+
                     }
 
                     if (!playDouble)
@@ -603,7 +599,7 @@ namespace DragonJack
             }
             int playerSum1 = playerCards1.GetSum();
             int playerSum2 = playerCards2.GetSum();
-            if (playerSum1 < 21  || playerSum2 < 21)
+            if (playerSum1 < 21 || playerSum2 < 21)
             {
                 if (playerSum2 < 21)
                 {
@@ -621,7 +617,7 @@ namespace DragonJack
 
         private static void DragonJacking(Hand dealerCards)
         {
-            
+
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             DeleteLegend();
             if (dealerCards.GetSum() == 21)
@@ -639,19 +635,19 @@ namespace DragonJack
                     Console.SetCursorPosition((winWidth - dragonjackingDealer[i].Length) / 2 - 10, winHeight / 2 - 3 + i);
                     Console.WriteLine(dragonjackingDealer[i]);
                 }
-            
+
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                string[] dragonjackongPlayer = new string[6];                                                          
-                dragonjackongPlayer[0] =  @"    ____                                 _            __   "; 
-                dragonjackongPlayer[1] =  @"   / __ \_________ _____ _____  ____    (_____ ______/ /__ ";
-                dragonjackongPlayer[2] =  @"  / / / / ___/ __ `/ __ `/ __ \/ __ \  / / __ `/ ___/ //_/ ";
-                dragonjackongPlayer[3] =  @" / /_/ / /  / /_/ / /_/ / /_/ / / / / / / /_/ / /__/ ,<    ";
-                dragonjackongPlayer[4] =  @"/_____/_/   \__,_/\__, /\____/_/ /___/ /\__,_/\___/_/|_/   ";
-                dragonjackongPlayer[5] =  @"                 /____/           /___/                    ";                                                         
-                for (int i = 0; i < dragonjackongPlayer.Length; i++)                                                                                                                         
+                string[] dragonjackongPlayer = new string[6];
+                dragonjackongPlayer[0] = @"    ____                                 _            __   ";
+                dragonjackongPlayer[1] = @"   / __ \_________ _____ _____  ____    (_____ ______/ /__ ";
+                dragonjackongPlayer[2] = @"  / / / / ___/ __ `/ __ `/ __ \/ __ \  / / __ `/ ___/ //_/ ";
+                dragonjackongPlayer[3] = @" / /_/ / /  / /_/ / /_/ / /_/ / / / / / / /_/ / /__/ ,<    ";
+                dragonjackongPlayer[4] = @"/_____/_/   \__,_/\__, /\____/_/ /___/ /\__,_/\___/_/|_/   ";
+                dragonjackongPlayer[5] = @"                 /____/           /___/                    ";
+                for (int i = 0; i < dragonjackongPlayer.Length; i++)
                 {
                     Console.SetCursorPosition((winWidth - dragonjackongPlayer.Length) / 2 - 60, winHeight / 2 - dragonjackongPlayer.Length / 2 + i);
                     Console.WriteLine(dragonjackongPlayer[i]);
@@ -661,6 +657,22 @@ namespace DragonJack
             dealerCards.GetCardsInHand()[1].PrintCard(dealerPosX + 1 * 5, dealerPosY);
             Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
             dealerCards.PrintSum();
+        }
+
+        public static bool IsGameOver(int playerSum, int dealerSum, bool playerJack, bool dealerJack)
+        {
+            bool gameOver = false;
+
+            if (dealerSum >= 17 || (playerJack || dealerJack))
+            {
+                return gameOver = true;
+            }
+            else if (playerSum > 21)
+            {
+                return gameOver = true;
+            }
+
+            return gameOver;
         }
 
         private static void IntroScreen()
@@ -788,16 +800,16 @@ namespace DragonJack
             dragon1[10] = @"  \______(_______;;; __;;;";
 
             string[] dragon2 = new string[15];
-            dragon2[0] =  @"  <>=======()";
-            dragon2[1] =  @" (/\___   /|\\          ()==========<>_ ";
-            dragon2[2] =  @"(      \_/ | \\        //|\   ______/ \)";
-            dragon2[3] =  @"         \_|  \\      // | \_/";
-            dragon2[4] =  @"           \|\/|\_   //  /\/";
-            dragon2[5] =  @"           (66)\ \_//  /";
-            dragon2[6] =  @"           //_/\_\/ /  |";
-            dragon2[7] =  @"          @@/  |=\  \  |";
-            dragon2[8] =  @"               \_=\_ \ |";
-            dragon2[9] =  @"                 \==\ \|\_";
+            dragon2[0] = @"  <>=======()";
+            dragon2[1] = @" (/\___   /|\\          ()==========<>_ ";
+            dragon2[2] = @"(      \_/ | \\        //|\   ______/ \)";
+            dragon2[3] = @"         \_|  \\      // | \_/";
+            dragon2[4] = @"           \|\/|\_   //  /\/";
+            dragon2[5] = @"           (66)\ \_//  /";
+            dragon2[6] = @"           //_/\_\/ /  |";
+            dragon2[7] = @"          @@/  |=\  \  |";
+            dragon2[8] = @"               \_=\_ \ |";
+            dragon2[9] = @"                 \==\ \|\_";
             dragon2[10] = @"              __(\===\(  )\";
             dragon2[11] = @"             (((~) __(_/   |";
             dragon2[12] = @"                  (((~) \  /";
@@ -818,11 +830,11 @@ namespace DragonJack
                 for (int j = 0; j < 9; j++)
                 {
                     Console.SetCursorPosition(titlePos, (winHeight - titleDragon.Length) / 2 + j);
-                    Console.WriteLine(letterDragon[j , i]);
-                    
+                    Console.WriteLine(letterDragon[j, i]);
+
                 }
-                
-                
+
+
                 titlePos += letterDragon[0, i].Length;
             }
             titlePos = (winWidth - titleDragon[0].Length) / 2;
@@ -832,12 +844,12 @@ namespace DragonJack
             for (int i = 0; i < titleDragon.Length; i++)
             {
                 Console.SetCursorPosition(titlePos, (winHeight - titleDragon.Length) / 2 + i);
-                    Console.WriteLine(titleDragon[i]);
+                Console.WriteLine(titleDragon[i]);
             }
             Console.ReadKey(true);
-            
+
         }
-        private static void PrintArrow(int x, int y) 
+        private static void PrintArrow(int x, int y)
         {
 
             Thread.Sleep(100);
@@ -869,11 +881,11 @@ namespace DragonJack
 
             else if (cardCount > 2)
             {
-                    options.RemoveAt(options.Count - 1);
-                    DeleteLegend();
+                options.RemoveAt(options.Count - 1);
+                DeleteLegend();
             }
 
-            
+
             for (int i = 0; i < options.Count; i++)
             {
                 Console.SetCursorPosition(legendPosX, legendPosY + (i * 2) + options.Count / 2);
@@ -916,7 +928,7 @@ namespace DragonJack
             return deck;
         }
 
-        static void PrintDeck (int x, int y)
+        static void PrintDeck(int x, int y)
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
@@ -936,7 +948,7 @@ namespace DragonJack
                 Console.WriteLine(deckLines[i]);
             }
         }
-        static void DeleteCardAndSum(int x, int y) 
+        static void DeleteCardAndSum(int x, int y)
         {
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             string delCardLines = "         ";
@@ -951,7 +963,7 @@ namespace DragonJack
                 Console.WriteLine(delCardLines);
             }
         }
-        
+
     }
 
 }
