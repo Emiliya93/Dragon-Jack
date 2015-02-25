@@ -108,26 +108,26 @@ namespace DragonJack
             if (this.cardSuit == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Black;
-                cardSuitLines[0] = " _ ";
+                cardSuitLines[0] = "  _ ";
                 cardSuitLines[1] = " ( ) ";
                 cardSuitLines[2] = "(_X_)";
-                cardSuitLines[3] = " I ";
+                cardSuitLines[3] = "  I ";
             }
             else if (this.cardSuit == 1)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                cardSuitLines[0] = " ^ ";
+                cardSuitLines[0] = "  ^ ";
                 cardSuitLines[1] = " / \\ ";
                 cardSuitLines[2] = " \\ / ";
-                cardSuitLines[3] = " v ";
+                cardSuitLines[3] = "  v ";
             }
             else if (this.cardSuit == 2)
             {
                 Console.ForegroundColor = ConsoleColor.Black;
-                cardSuitLines[0] = " ^ ";
+                cardSuitLines[0] = "  ^ ";
                 cardSuitLines[1] = " / \\ ";
                 cardSuitLines[2] = "(_^_)";
-                cardSuitLines[3] = " I ";
+                cardSuitLines[3] = "  I ";
             }
             else
             {
@@ -135,7 +135,7 @@ namespace DragonJack
                 cardSuitLines[0] = " _ _ ";
                 cardSuitLines[1] = "( V )";
                 cardSuitLines[2] = " \\ / ";
-                cardSuitLines[3] = " V ";
+                cardSuitLines[3] = "  V ";
             }
             for (int i = 0; i < 4; i++)
             {
@@ -312,7 +312,8 @@ namespace DragonJack
             // }
             //} while (key.Key != ConsoleKey.Escape);
             bool flagForSkipKeyReader = true;
-            while (!IsGameOver(playerCards.GetSum(), dealerCards.GetSum(), playerCards.IsDragonJack(), dealerCards.IsDragonJack()))
+            bool flagForMoves = true;
+            while (!IsGameOver(playerCards.GetSum(), dealerCards.GetSum(), playerCards.IsDragonJack(), dealerCards.IsDragonJack(), flagForMoves))
             {
                 switch (key.Key)
                 {
@@ -330,6 +331,7 @@ namespace DragonJack
                         }
                         break;
                     case ConsoleKey.Z:
+                        flagForMoves = false;
                         Hitting(playerCards, deck, playerPosX, playerPosY);
                         DeleteLegend();
                         PrintLegend(false, playerCards.GetCardsInHand().Count);
@@ -337,10 +339,12 @@ namespace DragonJack
                         {
                             DeleteLegend();
                             DealerPlay(dealerCards, playerCards.GetSum(), deck);
+                            flagForSkipKeyReader = false;
                             break;
                         }
                         break;
                     case ConsoleKey.X:
+                        flagForMoves = false;
                         DeleteLegend();
                         DealerPlay(dealerCards, playerCards.GetSum(), deck); flagForSkipKeyReader = false; break;
                     case ConsoleKey.C: /*TODO: Implement Double*/ break;
@@ -354,7 +358,7 @@ namespace DragonJack
                     key = Console.ReadKey(true);
                 }
             }
-            int winner = GetWinner(playerCards.GetSum(), dealerCards.GetSum(), playerCards.IsDragonJack(), dealerCards.IsDragonJack());
+            int winner = getWinner(playerCards.GetSum(), dealerCards.GetSum(), playerCards.IsDragonJack(), dealerCards.IsDragonJack());
             if (winner == 1)
             {
                 Console.WriteLine("You");
@@ -362,6 +366,10 @@ namespace DragonJack
             else if (winner == 2)
             {
                 Console.WriteLine("Not you");
+            }
+            else if (winner == 3)
+            {
+                Console.WriteLine("No one");
             }
             else
             {
@@ -626,10 +634,10 @@ namespace DragonJack
             Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
             dealerCards.PrintSum();
         }
-        public static bool IsGameOver(int playerSum, int dealerSum, bool playerJack, bool dealerJack)
+        public static bool IsGameOver(int playerSum, int dealerSum, bool playerJack, bool dealerJack, bool flagForMoves)
         {
             bool gameOver = false;
-            if (dealerSum >= 17 || (playerJack || dealerJack))
+            if (dealerSum >= 17 && !flagForMoves|| (playerJack || dealerJack))
             {
                 return gameOver = true;
             }
@@ -639,7 +647,7 @@ namespace DragonJack
             }
             return gameOver;
         }
-        public static int GetWinner(int playerSum, int dealerSum, bool playerJack, bool dealerJack)
+        public static int getWinner(int playerSum, int dealerSum, bool playerJack, bool dealerJack)
         {
             if (dealerSum > 21 || (playerJack && !dealerJack))
                 return 1; //Player won from busting dealer or from dragon jack
@@ -650,6 +658,8 @@ namespace DragonJack
                 return 1;
             else if (playerSum < dealerSum)
                 return 2;
+            else if (playerSum == dealerSum)
+                return 3;
             else return -1;
         }
         private static void IntroScreen()
