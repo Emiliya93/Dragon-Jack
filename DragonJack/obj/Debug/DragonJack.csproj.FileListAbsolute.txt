@@ -16,3 +16,9 @@ D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\DragonJack.pdb
 D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\bin\Debug\DragonJack.exe
 D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\bin\Debug\DragonJack.pdb
 D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
+C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\bin\Debug\DragonJack.exe.config
+C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\obj\Debug\DragonJack.exe
+C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\obj\Debug\DragonJack.pdb
+C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\bin\Debug\DragonJack.exe
+C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\bin\Debug\DragonJack.pdb
+C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
