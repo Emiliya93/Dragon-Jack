@@ -10,26 +10,7 @@
     {
         static void Main()
         {
-            // Catch unhandled exception: System.ArgumentOutOfRangeException: 
-            // The value must be less than the console's current maximum window size of 113 in that dimensio
-            // Note that this value depends on screen resolution and the console font.
-            Console.CursorVisible = false;
-            Console.WindowHeight = GlobalConsts.winHeight;
-            Console.WindowWidth = GlobalConsts.winWidth;
-            Console.BufferHeight = GlobalConsts.winHeight;
-            Console.BufferWidth = GlobalConsts.winWidth;
-            Console.Title = "DRAGONJACK";
-            try
-            {
-                Console.SetWindowSize(GlobalConsts.winWidth, GlobalConsts.winHeight);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-
-                Console.WriteLine("\nPlease decrease the console font size.");
-                Console.ReadKey(true);
-                return;
-            }
+            Screen.SetWindow();
             Screen.IntroScreen();
             // Get new deck made of 6 decks
             int[,] deck = Action.NewDeck();
@@ -96,10 +77,10 @@
                     switch (key.Key)
                     {
                         case ConsoleKey.Spacebar:
-                            Printer.DeleteLegend();
-                            Printer.PrintLegend(false, playerCards.GetCardsInHand().Count + 1);
                             if (playerCards.AreEqualCards())
                             {
+                                Printer.DeleteLegend();
+                                Printer.PrintLegend(false, playerCards.GetCardsInHand().Count + 1);
                                 int[] splitResults = Action.Splitting(playerCards, deck);
                                 bet = bet + bet;
                                 playerGameEnded = true;

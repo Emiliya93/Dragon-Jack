@@ -2,7 +2,7 @@
 {
     using System;
 
-    class GlobalConsts
+    public class GlobalConsts
     {
         public static Random random = new Random();
         public const int cardHeight = 8;

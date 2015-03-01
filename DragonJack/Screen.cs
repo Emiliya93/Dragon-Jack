@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -187,6 +188,31 @@
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.Black;
             Printer.PrintDeck(GlobalConsts.winWidth - GlobalConsts.winWidth / GlobalConsts.cardWidth, (GlobalConsts.winHeight - 5) / 2);
+        }
+
+        public static void SetWindow()
+        {
+            // Catch unhandled exception: System.ArgumentOutOfRangeException: 
+            // The value must be less than the console's current maximum window size of 113 in that dimensio
+            // Note that this value depends on screen resolution and the console font.
+            Console.CursorVisible = false;
+            Console.Title = "DRAGONJACK";
+
+            try
+            {
+                Console.WindowHeight = GlobalConsts.winHeight;
+                Console.WindowWidth = GlobalConsts.winWidth;
+                Console.BufferHeight = GlobalConsts.winHeight;
+                Console.BufferWidth = GlobalConsts.winWidth;
+                Console.SetWindowSize(GlobalConsts.winWidth, GlobalConsts.winHeight);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+
+                Console.WriteLine("\nPlease decrease the console font size.");
+                Console.ReadKey(true);
+                return;
+            }
         }
     }
 }
