@@ -6,6 +6,8 @@ using System.Linq;
 
 namespace DragonJack
 {
+
+
     class Card
     {
         static Random random = new Random();
@@ -310,6 +312,7 @@ namespace DragonJack
             IntroScreen();
             // Get new deck made of 6 decks
             int[,] deck = NewDeck();
+            float funds = 1000;
 
             while (true)
             {
@@ -318,6 +321,8 @@ namespace DragonJack
                     deck = NewDeck();
                 }
                 InitializeConsoleScreen();
+                
+                float bet = 100;//PlaceBet(funds);
 
                 Hand playerCards = new Hand();
                 Hand dealerCards = new Hand();
@@ -375,6 +380,7 @@ namespace DragonJack
                             if (playerCards.AreEqualCards())
                             {
                                 int[] splitResults = Splitting(playerCards, deck);
+                                bet = bet + bet;
                                 playerGameEnded = true;
                                 DealerPlay(dealerCards, splitResults.Min(), deck);
                                 currentResults[0] = dealerCards.GetSum();
@@ -406,7 +412,15 @@ namespace DragonJack
                             currentResults[0] = dealerCards.GetSum();
                             currentResults[1] = playerCards.GetSum();
                             break;
-                        case ConsoleKey.C: /*TODO: Implement Double*/ break;
+                        case ConsoleKey.C: 
+                            Hitting(playerCards, deck, playerPosX, playerPosY);
+                            bet = bet + bet;
+                            playerGameEnded = true;
+                            DeleteLegend();
+                            DealerPlay(dealerCards, playerCards.GetSum(), deck);
+                            currentResults[0] = dealerCards.GetSum();
+                            currentResults[1] = playerCards.GetSum();
+                        /*TODO: Implement Double*/ break;
                         case ConsoleKey.Escape: return;
                         case ConsoleKey.Enter: break;
                         default: InvalidInput();
@@ -423,6 +437,8 @@ namespace DragonJack
                 Console.SetCursorPosition(0, 0);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(string.Join(" ", currentResults));
+                Console.SetCursorPosition(0, 1);
+                Console.WriteLine("Collect: {0}", CollectBet(bet, currentResults));
                 key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Enter)
                 { 
@@ -440,6 +456,7 @@ namespace DragonJack
                         key = Console.ReadKey(true);
                     }
                 }
+                
             }
             // TODO: Make whole main in one while loop(until escape key is pressed)
 
@@ -456,6 +473,95 @@ namespace DragonJack
             PrintDeck(winWidth - winWidth / cardWidth, (winHeight - 5) / 2);
         }
 
+        static float PlaceBet(float funds)////////////////////////////////////////////////////////
+        {
+            float bet = 0;
+
+            return bet;
+        }
+        static float CollectBet(float bet, int[] results)
+        {
+            float collect = 0;
+            if (results[0] < 0) //dealer dragonjack
+            {
+                if (results[2] == 0)
+                {
+                    if (results[1] < 0)
+                    {
+                        return collect = bet;
+                    }
+                    else
+                    {
+                        return collect = 0;
+                    }
+                }
+                else
+                {
+                    if (results[1] < 0 ^ results[2] < 0)
+                    {
+                        return collect = bet / 2;
+                    }
+                    else
+                    {
+                        return collect = bet + 1.5f * bet;
+                    }
+                }
+            }
+            else if (results[0] > 0 && results[0] <= 21) //dealer dragonjack
+            {
+                if (results[2] == 0)
+                {
+                    if ((results[1] < results[0] && results[1] > 0) || results[1] > 21)
+                    {
+                        return collect = 0;
+                    }
+                    else if (results[1] == results[0])
+                    {
+                        return collect = bet;
+                    }
+                    else if (results[1] > results[0])
+                    {
+                        return collect = bet + bet;
+                    }
+                    else if (results[1] < 0)
+                    {
+                        return collect = bet + 1.5f * bet;
+                    }
+                }
+                else
+                {
+                    if (results[1] < results[0] && results[2] < results[0])
+                    {
+                        return collect = 0;
+                    }
+                    else if (results[1] == results[0] && results[2] == results[0])
+                    {
+                        return collect = bet;
+                    }
+                    else if (results[1] > results[0] && results[2] > results[0])
+                    {
+                        return collect = bet + bet;
+                    }
+                    else if (results[1] < results[0] ^ results[2] < results[0])
+                    {
+                        if (results[1] > results[0] || results[2] > results[0])
+                        {
+                            return collect = bet;
+                        }
+                        else if (results[1] == results[0] || results[2] == results[0])
+                        {
+                            return collect = bet / 2;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return collect = bet + bet;
+            }
+
+            return collect;
+        }
 
         static void Hitting(Hand playerCards, int[,] deck, int x, int y)
         {
