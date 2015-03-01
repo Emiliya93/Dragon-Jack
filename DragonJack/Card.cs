@@ -45,7 +45,7 @@
             do
             {
                 row = random.Next(0, 4);
-                col = random.Next(0, 13 * DragonJackGame.decksCount);
+                col = random.Next(0, 13 * GlobalConsts.decksCount);
                 this.cardSuit = row;
                 this.cardStrength = col % 13;
                 switch (col % 13)
@@ -74,19 +74,19 @@
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
-            string[] deckLines = new string[DragonJackGame.cardHeight];
-            deckLines[0] = "┌" + "".PadRight(DragonJackGame.cardWidth - 2, '─') + "┐";
-            deckLines[1] = "│" + "".PadRight(DragonJackGame.cardWidth - 2, '░') + "│";
-            deckLines[2] = "└" + "".PadRight(DragonJackGame.cardWidth - 2, '─') + "┘";
+            string[] deckLines = new string[GlobalConsts.cardHeight];
+            deckLines[0] = "┌" + "".PadRight(GlobalConsts.cardWidth - 2, '─') + "┐";
+            deckLines[1] = "│" + "".PadRight(GlobalConsts.cardWidth - 2, '░') + "│";
+            deckLines[2] = "└" + "".PadRight(GlobalConsts.cardWidth - 2, '─') + "┘";
 
             Console.SetCursorPosition(x, y);
             Console.WriteLine(deckLines[0]);
-            for (int i = 1; i < DragonJackGame.cardHeight - 1; i++)
+            for (int i = 1; i < GlobalConsts.cardHeight - 1; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(deckLines[1]);
             }
-            Console.SetCursorPosition(x, y + DragonJackGame.cardHeight - 1);
+            Console.SetCursorPosition(x, y + GlobalConsts.cardHeight - 1);
             Console.WriteLine(deckLines[2]);
         }
 
@@ -99,18 +99,18 @@
             string[] cardLines = new string[3];
             string[] cardSuitLines = new string[6];
             string cardStrength = cardStrengths[this.cardStrength];
-            cardLines[0] = "┌" + "".PadRight(DragonJackGame.cardWidth - 2, '─') + "┐";
-            cardLines[1] = "│" + "".PadRight(DragonJackGame.cardWidth - 2, ' ') + "│";
-            cardLines[2] = "└" + "".PadRight(DragonJackGame.cardWidth - 2, '─') + "┘";
+            cardLines[0] = "┌" + "".PadRight(GlobalConsts.cardWidth - 2, '─') + "┐";
+            cardLines[1] = "│" + "".PadRight(GlobalConsts.cardWidth - 2, ' ') + "│";
+            cardLines[2] = "└" + "".PadRight(GlobalConsts.cardWidth - 2, '─') + "┘";
 
             Console.SetCursorPosition(x, y);
             Console.WriteLine(cardLines[0]);
-            for (int i = 1; i < DragonJackGame.cardHeight - 1; i++)
+            for (int i = 1; i < GlobalConsts.cardHeight - 1; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(cardLines[1]);
             }
-            Console.SetCursorPosition(x, y + DragonJackGame.cardHeight - 1);
+            Console.SetCursorPosition(x, y + GlobalConsts.cardHeight - 1);
             Console.WriteLine(cardLines[2]);
 
             if (this.cardSuit == 0)
@@ -155,7 +155,7 @@
             }
             for (int i = 0; i < 6; i++)
             {
-                Console.SetCursorPosition(x + (DragonJackGame.cardWidth - 7) / 2, y + (DragonJackGame.cardHeight - 6) / 2 + i);
+                Console.SetCursorPosition(x + (GlobalConsts.cardWidth - 7) / 2, y + (GlobalConsts.cardHeight - 6) / 2 + i);
                 Console.WriteLine(cardSuitLines[i]);
             }
             Console.ForegroundColor = ConsoleColor.Black;

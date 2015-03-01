@@ -138,7 +138,7 @@
             dragon2[14] = @"                  '------'";
 
             int titleLength = Enumerable.Range(0, letterDragon.GetLength(1)).Sum(i => letterDragon[0, i].Length);
-            int titlePos = (DragonJackGame.winWidth - titleLength) / 2;
+            int titlePos = (GlobalConsts.winWidth - titleLength) / 2;
             for (int i = 0; i < 10; i++)
             {
                 if (i == 0 || i == 1 || i == 6 || i == 7)
@@ -151,12 +151,12 @@
                 }
                 for (int j = 0; j < 9; j++)
                 {
-                    Console.SetCursorPosition(titlePos, (DragonJackGame.winHeight - titleDragon.Length) / 2 + j);
+                    Console.SetCursorPosition(titlePos, (GlobalConsts.winHeight - titleDragon.Length) / 2 + j);
                     Console.WriteLine(letterDragon[j, i]);
                 }
                 titlePos += letterDragon[0, i].Length;
             }
-            titlePos = (DragonJackGame.winWidth - titleLength) / 2;
+            titlePos = (GlobalConsts.winWidth - titleLength) / 2;
             Thread.Sleep(500);
             Console.Clear();
             Thread.Sleep(400);
@@ -165,11 +165,11 @@
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Console.SetCursorPosition(titlePos, (DragonJackGame.winHeight - titleDragon.Length) / 2 + j);
+                    Console.SetCursorPosition(titlePos, (GlobalConsts.winHeight - titleDragon.Length) / 2 + j);
                     Console.WriteLine(letterDragon[j, i]);
                     titlePos += letterDragon[0, i].Length;
                 }
-                titlePos = (DragonJackGame.winWidth - titleLength) / 2;
+                titlePos = (GlobalConsts.winWidth - titleLength) / 2;
             }
 
             //for (int i = 0; i < titleDragon.Length; i++)
@@ -186,7 +186,7 @@
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.Black;
-            Printer.PrintDeck(DragonJackGame.winWidth - DragonJackGame.winWidth / DragonJackGame.cardWidth, (DragonJackGame.winHeight - 5) / 2);
+            Printer.PrintDeck(GlobalConsts.winWidth - GlobalConsts.winWidth / GlobalConsts.cardWidth, (GlobalConsts.winHeight - 5) / 2);
         }
     }
 }

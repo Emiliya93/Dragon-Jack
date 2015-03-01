@@ -8,49 +8,20 @@
 
     public class DragonJackGame
     {
-        public static Random random = new Random();
-        public const int cardHeight = 8;
-        public const int cardWidth = 9;
-        public const int suitsCount = 4;
-        public const int cardStrengthsCount = 13;
-        public const int decksCount = 6;
-        public const int cardOverlap = 4;
-        public const int maxCardsWidth = (8 + (decksCount - 1)) * cardOverlap;
-        public const int winWidth = 2 * maxCardsWidth + 30;
-        public const int winHeight = 40;
-        public const int dealerPosX = (winWidth - maxCardsWidth) / 2;
-        public const int dealerPosY = winHeight / 10;
-        public const int playerPosX = (winWidth - maxCardsWidth) / 2;
-        public const int playerPosY = winHeight - winHeight / 10 - cardHeight;
-        public const int doublePosX1 = (winWidth - (maxCardsWidth) * 2) / 4;
-        public const int doublePosY1 = playerPosY;
-        public const int doublePosX2 = doublePosX1 + maxCardsWidth + doublePosX1;
-        public const int doublePosY2 = playerPosY;
-        public const int legendPosX = 5;
-        public const int legendPosY = 17;
-        public const int dealingSpeed = 500;
-
-
         static void Main()
         {
-            //TODO: Catch exception
-            //Unhandled Exception: System.ArgumentOutOfRangeException: The value must be less than the console's current maximum window size of 113 in that dimensio
-            //n. Note that this value depends on screen resolution and the console font.
-            //Parameter name: width
-            //Actual value was 150.
-            //   at System.Console.SetWindowSize(Int32 width, Int32 height)
-            //   at DragonJack.DragonJackGame.IntroScreen() in c:\Users\ilia\Downloads\Dragon-Jack-master\Dragon-Jack-master\DragonJack\DragonJackGame.cs:line 670
-            //   at DragonJack.DragonJackGame.Main() in c:\Users\ilia\Downloads\Dragon-Jack-master\Dragon-Jack-master\DragonJack\DragonJackGame.cs:line 278
-            //Press any key to continue . . .
+            // Catch unhandled exception: System.ArgumentOutOfRangeException: 
+            // The value must be less than the console's current maximum window size of 113 in that dimensio
+            // Note that this value depends on screen resolution and the console font.
             Console.CursorVisible = false;
-            Console.WindowHeight = winHeight;
-            Console.WindowWidth = winWidth;
-            Console.BufferHeight = winHeight;
-            Console.BufferWidth = winWidth;
+            Console.WindowHeight = GlobalConsts.winHeight;
+            Console.WindowWidth = GlobalConsts.winWidth;
+            Console.BufferHeight = GlobalConsts.winHeight;
+            Console.BufferWidth = GlobalConsts.winWidth;
             Console.Title = "DRAGONJACK";
             try
             {
-                Console.SetWindowSize(winWidth, winHeight);
+                Console.SetWindowSize(GlobalConsts.winWidth, GlobalConsts.winHeight);
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -78,26 +49,26 @@
                 Hand dealerCards = new Hand();
                 // Initial dealing
                 playerCards.FillHand(new Card(deck));
-                Thread.Sleep(dealingSpeed);
-                playerCards.GetCardsInHand()[0].PrintCard(playerPosX, playerPosY);
-                Console.SetCursorPosition(playerPosX - 7, playerPosY);
+                Thread.Sleep(GlobalConsts.dealingSpeed);
+                playerCards.GetCardsInHand()[0].PrintCard(GlobalConsts.playerPosX, GlobalConsts.playerPosY);
+                Console.SetCursorPosition(GlobalConsts.playerPosX - 7, GlobalConsts.playerPosY);
                 playerCards.PrintSum();
 
                 dealerCards.FillHand(new Card(deck));
-                Thread.Sleep(dealingSpeed);
-                dealerCards.GetCardsInHand()[0].PrintCard(dealerPosX, dealerPosY);
-                Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
+                Thread.Sleep(GlobalConsts.dealingSpeed);
+                dealerCards.GetCardsInHand()[0].PrintCard(GlobalConsts.dealerPosX, GlobalConsts.dealerPosY);
+                Console.SetCursorPosition(GlobalConsts.dealerPosX - 7, GlobalConsts.dealerPosY);
                 dealerCards.PrintSum();
 
                 playerCards.FillHand(new Card(deck));
-                Thread.Sleep(dealingSpeed);
-                playerCards.GetCardsInHand()[1].PrintCard(playerPosX + cardOverlap, playerPosY);
-                Console.SetCursorPosition(playerPosX - 7, playerPosY);
+                Thread.Sleep(GlobalConsts.dealingSpeed);
+                playerCards.GetCardsInHand()[1].PrintCard(GlobalConsts.playerPosX + GlobalConsts.cardOverlap, GlobalConsts.playerPosY);
+                Console.SetCursorPosition(GlobalConsts.playerPosX - 7, GlobalConsts.playerPosY);
                 playerCards.PrintSum();
 
                 dealerCards.FillHand(new Card(deck));
-                Thread.Sleep(dealingSpeed);
-                dealerCards.GetCardsInHand()[1].PrintBack(dealerPosX + cardOverlap, dealerPosY);
+                Thread.Sleep(GlobalConsts.dealingSpeed);
+                dealerCards.GetCardsInHand()[1].PrintBack(GlobalConsts.dealerPosX + GlobalConsts.cardOverlap, GlobalConsts.dealerPosY);
 
                 Printer.PrintLegend(playerCards.AreEqualCards(), playerCards.GetCardsInHand().Count);
 
@@ -143,7 +114,7 @@
                             }
                             break;
                         case ConsoleKey.Z:
-                            Action.Hitting(playerCards, deck, playerPosX, playerPosY);
+                            Action.Hitting(playerCards, deck, GlobalConsts.playerPosX, GlobalConsts.playerPosY);
                             Printer.DeleteLegend();
                             Printer.PrintLegend(false, playerCards.GetCardsInHand().Count);
                             if (playerCards.GetSum() >= 21)
@@ -163,7 +134,7 @@
                             currentResults[1] = playerCards.GetSum();
                             break;
                         case ConsoleKey.C:
-                            Action.Hitting(playerCards, deck, playerPosX, playerPosY);
+                            Action.Hitting(playerCards, deck, GlobalConsts.playerPosX, GlobalConsts.playerPosY);
                             bet = bet + bet;
                             playerGameEnded = true;
                             Printer.DeleteLegend();
@@ -305,5 +276,4 @@
             return collect;
         }
     }
-
 }

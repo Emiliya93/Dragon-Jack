@@ -45,6 +45,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="DragonJackGame.cs" />
+    <Compile Include="GlobalConsts.cs" />
     <Compile Include="Hand.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="Screen.cs" />

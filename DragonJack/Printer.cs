@@ -14,18 +14,18 @@
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
             string[] deckLines = new string[3];
-            deckLines[0] = "┌" + "".PadRight(DragonJackGame.cardWidth - 2, '─') + "┐";
-            deckLines[1] = "║" + "".PadRight(DragonJackGame.cardWidth - 2, '░') + "│";
-            deckLines[2] = "╚" + "".PadRight(DragonJackGame.cardWidth - 2, '═') + "┘";
+            deckLines[0] = "┌" + "".PadRight(GlobalConsts.cardWidth - 2, '─') + "┐";
+            deckLines[1] = "║" + "".PadRight(GlobalConsts.cardWidth - 2, '░') + "│";
+            deckLines[2] = "╚" + "".PadRight(GlobalConsts.cardWidth - 2, '═') + "┘";
 
             Console.SetCursorPosition(x, y - 1);
             Console.WriteLine(deckLines[0]);
-            for (int i = 1; i < DragonJackGame.cardHeight - 1; i++)
+            for (int i = 1; i < GlobalConsts.cardHeight - 1; i++)
             {
                 Console.SetCursorPosition(x, y - 1 + i);
                 Console.WriteLine(deckLines[1]);
             }
-            Console.SetCursorPosition(x, y - 1 + DragonJackGame.cardHeight - 1);
+            Console.SetCursorPosition(x, y - 1 + GlobalConsts.cardHeight - 1);
             Console.WriteLine(deckLines[2]);
         }
 
@@ -34,8 +34,8 @@
             DeleteLegend();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Thread.Sleep(500);
-            dealerCards.GetCardsInHand()[1].PrintCard(DragonJackGame.dealerPosX + 1 * DragonJackGame.cardOverlap, DragonJackGame.dealerPosY);
-            Console.SetCursorPosition(DragonJackGame.dealerPosX - 7, DragonJackGame.dealerPosY);
+            dealerCards.GetCardsInHand()[1].PrintCard(GlobalConsts.dealerPosX + 1 * GlobalConsts.cardOverlap, GlobalConsts.dealerPosY);
+            Console.SetCursorPosition(GlobalConsts.dealerPosX - 7, GlobalConsts.dealerPosY);
             dealerCards.PrintSum();
             string[] dragonjacking = new string[8];
             dragonjacking[0] = "▄▄▄▄▄▄     ▄▄▄▄▄▄    ▄▄▄▄▄▄    ▄▄▄▄▄   ▄▄▄▄▄  ▄▄           ▄    ▄▄▄▄▄▄  ▄▄▄▄▄▄    ▄   ▄";
@@ -48,7 +48,7 @@
             dragonjacking[7] = "▀▀▀▀▀▀    ██   █▀   ▀▀   ▀    ▀▀▀▀▀▀   ▀▀▀▀▀   ▀   ▀  ▀▀▀▀▀    ▀▀   ▀  ▀▀▀▀▀▀    ▀    ▀";
             for (int i = 0; i < dragonjacking.Length; i++)
             {
-                Console.SetCursorPosition((DragonJackGame.winWidth - dragonjacking.Length) / 2 - 40, DragonJackGame.winHeight / 2 - dragonjacking.Length / 2 + i);
+                Console.SetCursorPosition((GlobalConsts.winWidth - dragonjacking.Length) / 2 - 40, GlobalConsts.winHeight / 2 - dragonjacking.Length / 2 + i);
                 Console.WriteLine(dragonjacking[i]);
             }
         }
@@ -93,7 +93,7 @@
 
             for (int i = 0; i < options.Count; i++)
             {
-                Console.SetCursorPosition(DragonJackGame.legendPosX, DragonJackGame.legendPosY + (i * 2) + options.Count / 2);
+                Console.SetCursorPosition(GlobalConsts.legendPosX, GlobalConsts.legendPosY + (i * 2) + options.Count / 2);
                 Console.WriteLine(options[i]);
                 Console.WriteLine();
             }
@@ -102,9 +102,9 @@
         public static void DeleteLegend()
         {
             string deleteLegend = "               ";
-            for (int i = 0; i < DragonJackGame.playerPosY - (DragonJackGame.dealerPosY + DragonJackGame.cardHeight) - 2; i++)
+            for (int i = 0; i < GlobalConsts.playerPosY - (GlobalConsts.dealerPosY + GlobalConsts.cardHeight) - 2; i++)
             {
-                Console.SetCursorPosition(DragonJackGame.legendPosX, DragonJackGame.dealerPosY + DragonJackGame.cardHeight + i);
+                Console.SetCursorPosition(GlobalConsts.legendPosX, GlobalConsts.dealerPosY + GlobalConsts.cardHeight + i);
                 Console.WriteLine(deleteLegend);
             }
         }
@@ -112,10 +112,10 @@
         public static void InvalidInput()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition((DragonJackGame.winWidth - "Wrong key!".Length) / 2, DragonJackGame.winHeight / 2);
+            Console.SetCursorPosition((GlobalConsts.winWidth - "Wrong key!".Length) / 2, GlobalConsts.winHeight / 2);
             Console.WriteLine("Wrong key!");
             Thread.Sleep(500);
-            Console.SetCursorPosition((DragonJackGame.winWidth - "Wrong key!".Length) / 2, DragonJackGame.winHeight / 2);
+            Console.SetCursorPosition((GlobalConsts.winWidth - "Wrong key!".Length) / 2, GlobalConsts.winHeight / 2);
             Console.WriteLine("                ");
         }
 
@@ -128,7 +128,7 @@
             Console.SetCursorPosition(x - 7, y);
             Console.WriteLine(delSum);
 
-            for (int i = 0; i < DragonJackGame.cardHeight; i++)
+            for (int i = 0; i < GlobalConsts.cardHeight; i++)
             {
                 Console.SetCursorPosition(x, y + i);
                 Console.WriteLine(delCardLines);
