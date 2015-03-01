@@ -13,18 +13,18 @@
             Screen.SetWindow();
             Screen.IntroScreen();
             // Get new deck made of 6 decks
-            int[,] deck = Action.NewDeck();
+            int[,] deck = Action.GetDeck();
             float funds = 1000;
 
             while (true)
             {
                 if (deck.Cast<int>().Sum() < 60) //if cards in deck <60 (arbitrary number, but large enough for another play) add discarded cards and "shuffle"
                 {
-                    deck = Action.NewDeck();
+                    deck = Action.GetDeck();
                 }
                 Screen.InitializeConsoleScreen();
                 
-                float bet = 100;//PlaceBet(funds);
+                float bet = 100;//Action.PlaceBet(funds);
 
                 Hand playerCards = new Hand();
                 Hand dealerCards = new Hand();
@@ -140,7 +140,7 @@
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(string.Join(" ", currentResults));
                 Console.SetCursorPosition(0, 1);
-                Console.WriteLine("Collect: {0}", CollectBet(bet, currentResults));
+                Console.WriteLine("Collect: {0}", Action.CollectBet(bet, currentResults));
                 key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Enter)
                 { 
@@ -162,99 +162,9 @@
             }
             // TODO: Make whole main in one while loop(until escape key is pressed)
 
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        static float PlaceBet(float funds)////////////////////////////////////////////////////////
-        {
-            float bet = 0;
-
-            return bet;
-        }
-        static float CollectBet(float bet, int[] results)
-        {
-            float collect = 0;
-            if (results[0] < 0) //dealer dragonjack
-            {
-                if (results[2] == 0)
-                {
-                    if (results[1] < 0)
-                    {
-                        return collect = bet;
-                    }
-                    else
-                    {
-                        return collect = 0;
-                    }
-                }
-                else
-                {
-                    if (results[1] < 0 ^ results[2] < 0)
-                    {
-                        return collect = bet / 2;
-                    }
-                    else
-                    {
-                        return collect = bet + 1.5f * bet;
-                    }
-                }
-            }
-            else if (results[0] > 0 && results[0] <= 21) //dealer dragonjack
-            {
-                if (results[2] == 0)
-                {
-                    if ((results[1] < results[0] && results[1] > 0) || results[1] > 21)
-                    {
-                        return collect = 0;
-                    }
-                    else if (results[1] == results[0])
-                    {
-                        return collect = bet;
-                    }
-                    else if (results[1] > results[0])
-                    {
-                        return collect = bet + bet;
-                    }
-                    else if (results[1] < 0)
-                    {
-                        return collect = bet + 1.5f * bet;
-                    }
-                }
-                else
-                {
-                    if (results[1] < results[0] && results[2] < results[0])
-                    {
-                        return collect = 0;
-                    }
-                    else if (results[1] == results[0] && results[2] == results[0])
-                    {
-                        return collect = bet;
-                    }
-                    else if (results[1] > results[0] && results[2] > results[0])
-                    {
-                        return collect = bet + bet;
-                    }
-                    else if (results[1] < results[0] ^ results[2] < results[0])
-                    {
-                        if (results[1] > results[0] || results[2] > results[0])
-                        {
-                            return collect = bet;
-                        }
-                        else if (results[1] == results[0] || results[2] == results[0])
-                        {
-                            return collect = bet / 2;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                return collect = bet + bet;
-            }
-
-            return collect;
+            //Console.BackgroundColor = ConsoleColor.Black;
+            //Console.Clear();
+            //Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

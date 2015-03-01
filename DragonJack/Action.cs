@@ -9,6 +9,14 @@
 
     class Action
     {
+
+        public static float PlaceBet(float funds)////////////////////////////////////////////////////////
+        {
+            float bet = 0;
+
+            return bet;
+        }
+
         public static void Hitting(Hand playerCards, int[,] deck, int x, int y)
         {
             playerCards.FillHand(new Card(deck));
@@ -215,7 +223,91 @@
 
         //TODO: method Doubling
 
-        public static int[,] NewDeck()
+        public static float CollectBet(float bet, int[] results)
+        {
+            float collect = 0;
+            if (results[0] < 0) //dealer dragonjack
+            {
+                if (results[2] == 0)
+                {
+                    if (results[1] < 0)
+                    {
+                        return collect = bet;
+                    }
+                    else
+                    {
+                        return collect = 0;
+                    }
+                }
+                else
+                {
+                    if (results[1] < 0 ^ results[2] < 0)
+                    {
+                        return collect = bet / 2;
+                    }
+                    else
+                    {
+                        return collect = bet + 1.5f * bet;
+                    }
+                }
+            }
+            else if (results[0] > 0 && results[0] <= 21) //dealer dragonjack
+            {
+                if (results[2] == 0)
+                {
+                    if ((results[1] < results[0] && results[1] > 0) || results[1] > 21)
+                    {
+                        return collect = 0;
+                    }
+                    else if (results[1] == results[0])
+                    {
+                        return collect = bet;
+                    }
+                    else if (results[1] > results[0])
+                    {
+                        return collect = bet + bet;
+                    }
+                    else if (results[1] < 0)
+                    {
+                        return collect = bet + 1.5f * bet;
+                    }
+                }
+                else
+                {
+                    if (results[1] < results[0] && results[2] < results[0])
+                    {
+                        return collect = 0;
+                    }
+                    else if (results[1] == results[0] && results[2] == results[0])
+                    {
+                        return collect = bet;
+                    }
+                    else if (results[1] > results[0] && results[2] > results[0])
+                    {
+                        return collect = bet + bet;
+                    }
+                    else if (results[1] < results[0] ^ results[2] < results[0])
+                    {
+                        if (results[1] > results[0] || results[2] > results[0])
+                        {
+                            return collect = bet;
+                        }
+                        else if (results[1] == results[0] || results[2] == results[0])
+                        {
+                            return collect = bet / 2;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return collect = bet + bet;
+            }
+
+            return collect;
+        }
+
+        public static int[,] GetDeck()
         {
             int[,] deck = new int[GlobalConsts.suitsCount, GlobalConsts.cardStrengthsCount * GlobalConsts.decksCount];
             for (int i = 0; i < deck.GetLength(0); i++)
