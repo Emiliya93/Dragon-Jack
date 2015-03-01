@@ -319,5 +319,46 @@
             }
             return deck;
         }
+        public void KeepingScore(int score, string name)
+        {
+              string crntNameNscore = score.ToString() + " " + name;
+               
+            
+            string[] scoreNNPlayaName = new string[11] ;
+            string[] daRealScore = new string[11];
+            string[] daRealRealScore = new string[10];
+             scoreNNPlayaName = System.IO.File.ReadAllLines(@"..\..\Score.txt");
+
+             daRealScore[10] = crntNameNscore;
+             for (int i = 0; i <10; i++)
+             {
+                     daRealScore[i] = scoreNNPlayaName[i];
+
+             }
+
+
+             Array.Sort(daRealScore);
+             Array.Reverse(daRealScore);
+             for (int i = 0; i < 10; i++)
+             {
+                 daRealRealScore[i] = daRealScore[i];
+             }
+
+             StringBuilder sb = new StringBuilder();
+           
+
+            for(int i = 0; i < 10; i++)
+            {
+                sb.Append(daRealRealScore[i] + "\r\n");
+             
+
+            }
+            Console.WriteLine(sb.ToString());
+            System.IO.File.WriteAllText(@"Score.txt", sb.ToString());
+        
+        
+      
+    }
+        
     }
 }
