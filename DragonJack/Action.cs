@@ -7,7 +7,7 @@
     using System.Threading;
     using System.IO;
     using System.Globalization;
-
+    using System.Media;
     class Action
     {
 
@@ -31,6 +31,7 @@
                     string input = "";
                     Console.SetCursorPosition(x - funds.ToString().Length / 2, y);
                     input = Console.ReadLine();
+                    Sounds.PlaySound("placeChips");
                     if (string.IsNullOrEmpty(input))
                     {
                         input = placedBet.ToString();
@@ -429,7 +430,6 @@
                 Console.SetCursorPosition((GlobalConsts.winWidth - "Input your initials (max 6 characters): ".Length) / 2, 4);
                 Console.Write("".PadRight("Input your initials (max 6 characters): ".Length + name.Length, ' '));
             }
-
             list.Add(new KeyValuePair<string, float>(name, score));
             list = list.OrderByDescending(x => x.Value).ToList();
             list.RemoveAt(10);
@@ -444,6 +444,8 @@
                 sb.Append(list[i].Key.PadRight(10, ' ') + list[i].Value.ToString() + "\r\n");
             }
             WritingFile(filePath, sb.ToString());
+            Sounds.PlayMusic("scoreMusic");
+
         }
 
         public static string[] ReadingFile(string path)

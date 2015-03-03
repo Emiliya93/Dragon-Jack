@@ -9,9 +9,10 @@
     {
         private static readonly Dictionary<string, SoundPlayer> playersRef = new Dictionary<string, SoundPlayer>
         {
-            { "placeCard", new SoundPlayer(@"../../CasinoSoundPackage/cardPlace1.wav") },
-            { "placeChips", new SoundPlayer(@"../../CasinoSoundPackage/cardPlace1.wav") },
-            { "music", new SoundPlayer(@"../../CasinoSoundPackage/cardPlace1.wav") }
+            { "placeCard", new SoundPlayer(@"../../SoundFiles/cardPlace1.wav") },
+            { "placeChips", new SoundPlayer(@"../../SoundFiles/chipsHandle6.wav") },
+            { "scoreMusic", new SoundPlayer(@"../../SoundFiles/Loop_23.wav") },
+            { "swordClash", new SoundPlayer(@"../../SoundFiles/SwordClash.wav") }
         };
         public static void LoadSounds(Dictionary<string, SoundPlayer> playersRef)
         {
@@ -35,8 +36,21 @@
 
         public static void PlaySound(string sound)
         {
-            LoadSounds(playersRef);
             playersRef[sound].Play();
+            
+        }
+        public static void PlayMusic(string sound)
+        {
+            LoadSounds(playersRef);
+            SoundPlayer player =  playersRef[sound];
+            player.PlayLooping();
+            ConsoleKeyInfo key = new ConsoleKeyInfo();
+            key = Console.ReadKey(true);
+            while (key.Key != ConsoleKey.Enter || key.Key != ConsoleKey.Escape)
+            {
+                key = Console.ReadKey(true);
+            }
+            player.Stop();
         }
     }
 }

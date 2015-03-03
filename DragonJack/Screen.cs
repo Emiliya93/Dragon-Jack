@@ -194,6 +194,7 @@
                 }
                 titlePos = (GlobalConsts.winWidth - titleLength) / 2;
             }
+            Sounds.PlaySound("swordClash");
 
             Console.SetCursorPosition((GlobalConsts.winWidth - "Press ENTER to continue".Length) / 2, (GlobalConsts.winHeight + letterDragon.GetLength(0) + 5) / 2);
             Thread.Sleep(500);

@@ -125,6 +125,8 @@
                  Console.ForegroundColor = ConsoleColor.White;
                  Console.SetCursorPosition((GlobalConsts.winWidth - "Press F12 to leave the table".Length) / 2, GlobalConsts.winHeight - 1);
                  Console.Write("Press F12 to leave the table");
+                 Console.SetCursorPosition((GlobalConsts.winWidth - "Press ENTER to continue".Length) / 2, GlobalConsts.winHeight - 2);
+                 Console.Write("Press ENTER to continue");
 
                  key = Console.ReadKey(true);
 
