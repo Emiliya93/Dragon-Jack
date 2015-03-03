@@ -28,5 +28,3 @@ E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.pdb
 E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.exe
 E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.pdb
 E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
-D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\Interop.WMPLib.dll
-D:\Ger\Dropbox\SOFTUNI\Telerik\DragonJack\DragonJack\obj\Debug\DragonJack.csproj.ResolveComReference.cache

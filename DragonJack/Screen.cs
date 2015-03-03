@@ -130,36 +130,6 @@
             letterDragon[7, 9] = "   ███   ▀█▀";
             letterDragon[8, 9] = "   ▀        ";
 
-            string[] dragon1 = new string[11];
-            dragon1[0] = @"               \||/       ";
-            dragon1[1] = @"                |  @___oo ";
-            dragon1[2] = @"      /\  /\   / (__,,,,| ";
-            dragon1[3] = @"     ) /^\) ^\/ _)        ";
-            dragon1[4] = @"     )   /^\/   _)        ";
-            dragon1[5] = @"     )   _ /  / _)        ";
-            dragon1[6] = @" /\  )/\/ ||  | )_)       ";
-            dragon1[7] = @"<  >      |(,,) )__)      ";
-            dragon1[8] = @" ||      /    \)___)\     ";
-            dragon1[9] = @" | \____(      )___) )___ ";
-            dragon1[10] = @"  \______(_______;;; __;;;";
-
-            string[] dragon2 = new string[15];
-            dragon2[0] = @"  <>=======()";
-            dragon2[1] = @" (/\___   /|\\          ()==========<>_ ";
-            dragon2[2] = @"(      \_/ | \\        //|\   ______/ \)";
-            dragon2[3] = @"         \_|  \\      // | \_/";
-            dragon2[4] = @"           \|\/|\_   //  /\/";
-            dragon2[5] = @"           (66)\ \_//  /";
-            dragon2[6] = @"           //_/\_\/ /  |";
-            dragon2[7] = @"          @@/  |=\  \  |";
-            dragon2[8] = @"               \_=\_ \ |";
-            dragon2[9] = @"                 \==\ \|\_";
-            dragon2[10] = @"              __(\===\(  )\";
-            dragon2[11] = @"             (((~) __(_/   |";
-            dragon2[12] = @"                  (((~) \  /";
-            dragon2[13] = @"                  ______/ /";
-            dragon2[14] = @"                  '------'";
-
             int titleLength = Enumerable.Range(0, letterDragon.GetLength(1)).Sum(i => letterDragon[0, i].Length);
             int titlePos = (GlobalConsts.winWidth - titleLength) / 2;
             for (int i = 0; i < 10; i++)
@@ -230,6 +200,60 @@
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;
+
+            string[] dragon1 = new string[39];
+            dragon1[0] =  @"   █                              ";
+            dragon1[1] =  @"   ██                             ";
+            dragon1[2] =  @"   ▀██▄       ▀▀██▄               ";
+            dragon1[3] =  @"    ▀███▄        ▀███▄            ";
+            dragon1[4] =  @"      ▀████▄       ▀███▄          ";
+            dragon1[5] =  @"        ▀██████▄     ▀███▄        ";
+            dragon1[6] =  @"            ▀██████████████       ";
+            dragon1[7] =  @"▄████▄    ▄█████████████▀███      ";
+            dragon1[8] =  @"█▀  ▀██████████████████ ▐ ███     ";
+            dragon1[9] =  @"▀     ██████████████████▄█████▄   ";
+            dragon1[10] = @"    █████████████████████████████▄";
+            dragon1[11] = @" ▄█████████████████████████████▄██";
+            dragon1[12] = @"█████████████▀  ▀█████▄ █  █ ▀███▀";
+            dragon1[13] = @"████████████▀    ▀██ ▀██▄     █ █ ";
+            dragon1[14] = @"███████████       ▀██▄ ▀██▄       ";
+            dragon1[15] = @"███████████        ▀██▄  ▀██▄     ";
+            dragon1[16] = @"████████████        ▀███▄         ";
+            dragon1[17] = @"█████████████         ▀███▄       ";
+            dragon1[18] = @"███████████████                   ";
+            dragon1[19] = @" █████████████████                ";
+            dragon1[20] = @"  ███████████████████             ";
+            dragon1[21] = @"   ████████████████████           ";
+            dragon1[22] = @"    █████████████████████         ";
+            dragon1[23] = @"     ██████████████████████       ";
+            dragon1[24] = @"      ██████████████████████      ";
+            dragon1[25] = @"       ██████████████████████     ";
+            dragon1[26] = @"        ██████████████████████    ";
+            dragon1[27] = @"        ██████████████████████    ";
+            dragon1[28] = @"        ██████████████████████    ";
+            dragon1[29] = @"        ██████████████████████    ";
+            dragon1[30] = @"       ███████████████████████    ";
+            dragon1[31] = @"      ███████████████████████     ";
+            dragon1[32] = @"     ███████████████████████      ";
+            dragon1[33] = @"    ███████████████████████       ";
+            dragon1[34] = @"   ███████████████████████        ";
+            dragon1[35] = @"  ███████████████████████         ";
+            dragon1[36] = @" ███████████████████████          ";
+            dragon1[37] = @"███████████████████████           ";
+            dragon1[38] = @"██████████████████████            ";
+
+            string[] dragon2 = new string[39];
+            for (int i = 0; i < dragon1.Length; i++)
+            {
+                char[] chars = dragon1[i].ToCharArray();
+                Array.Reverse(chars);
+                dragon2[i] = new string(chars);
+                Console.SetCursorPosition(0, i);
+                Console.Write(dragon1[i]);
+                Console.SetCursorPosition(GlobalConsts.winWidth - dragon2[0].Length, i);
+                Console.Write(dragon2[i]);
+            }
+
             string name = "";
             if (score > lowestScore)
             {

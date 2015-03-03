@@ -58,6 +58,7 @@
                 Console.SetCursorPosition((GlobalConsts.winWidth - dragonjacking.Length) / 2 - 40, GlobalConsts.winHeight / 2 - dragonjacking.Length / 2 + i);
                 Console.WriteLine(dragonjacking[i]);
             }
+            Sounds.PlaySound("dragonjack");
         }
         
         // Print and delete legend methods

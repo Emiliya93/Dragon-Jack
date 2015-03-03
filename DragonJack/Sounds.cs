@@ -13,7 +13,8 @@
             { "placeChips", @"../../SoundFiles/chipsHandle6.wav" },
             { "scoreMusic", @"../../SoundFiles/Loop_23.wav" },
             { "swordClash", @"../../SoundFiles/SwordClash.wav" },
-            { "swordSwoosh", @"../../SoundFiles/Swoosh01.wav" }
+            { "swordSwoosh", @"../../SoundFiles/Swoosh01.wav" },
+            { "dragonjack", @"../../SoundFiles/Drum.wav" }
         };
         private static void LoadSound(SoundPlayer player)
         {

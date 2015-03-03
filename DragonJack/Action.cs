@@ -417,7 +417,6 @@
             }
 
             string name = "";
-
             Screen.OutroScreen(score, float.Parse(nameScore[1]));
 
             list.Add(new KeyValuePair<string, float>(name, score));
