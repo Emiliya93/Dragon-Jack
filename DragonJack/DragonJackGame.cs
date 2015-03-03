@@ -549,6 +549,11 @@ namespace DragonJack
                     {
                         return collect = bet;
                     }
+                    else if (results[1] == results[0] ^ results[2] == results[0])
+                    {
+
+                        return collect = bet;
+                    }
                     else if ((results[1] > results[0] && results[1] < 21) && (results[2] > results[0] && results[2] < 21))
                     {
                         return collect = bet + bet;
