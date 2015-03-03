@@ -375,10 +375,10 @@ namespace DragonJack
                     switch (key.Key)
                     {
                         case ConsoleKey.Spacebar:
-                            DeleteLegend();
-                            PrintLegend(false, playerCards.GetCardsInHand().Count + 1);
                             if (playerCards.AreEqualCards())
                             {
+                                DeleteLegend();
+                                PrintLegend(false, playerCards.GetCardsInHand().Count + 1);
                                 int[] splitResults = Splitting(playerCards, deck);
                                 bet = bet + bet;
                                 playerGameEnded = true;
@@ -530,7 +530,18 @@ namespace DragonJack
                 }
                 else
                 {
-                    if (results[1] < results[0] && results[2] < results[0])
+                    if ((results[1] > 21 || results[1] < results[0]) ^ (results[2] > 21 || results[2] < results[0]))
+                    {
+                        if (results[1] == results[0] || results[2] == results[0])
+                        {
+                            return collect = bet / 2;
+                        }
+                        else if (results[1] > results[0] || results[2] > results[0])
+                        {
+                            return collect = bet;
+                        }
+                    }
+                    else if ((results[1] > 21 || results[1] < results[0]) && (results[2] > 21 || results[2] < results[0]))
                     {
                         return collect = 0;
                     }
@@ -538,25 +549,37 @@ namespace DragonJack
                     {
                         return collect = bet;
                     }
-                    else if (results[1] > results[0] && results[2] > results[0])
+                    else if ((results[1] > results[0] && results[1] < 21) && (results[2] > results[0] && results[2] < 21))
                     {
                         return collect = bet + bet;
                     }
-                    else if (results[1] < results[0] ^ results[2] < results[0])
+                    else if ((results[1] > results[0] && results[1] < 21) ^ (results[2] > results[0] && results[2] < 21))
                     {
-                        if (results[1] > results[0] || results[2] > results[0])
+                        if (results[1] == results[0] || results[2] == results[0])
+                        {
+                            return collect = bet + bet + bet / 2;
+                        }
+                        else if (results[1] < results[0] || results[2] < results[0])
                         {
                             return collect = bet;
                         }
-                        else if (results[1] == results[0] || results[2] == results[0])
-                        {
-                            return collect = bet / 2;
-                        }
                     }
+                    
                 }
             }
             else
             {
+                if (results[1] > 21 ^ results[2] > 21)
+                {
+                    if ((results[1] == results[0] || results[2] == results[0]) && results[2] > 0)
+                    {
+                        return collect = bet / 2;
+                    }
+                    else if (results[1] > results[0] || results[2] > results[0])
+                    {
+                        return collect = bet;
+                    }
+                }
                 return collect = bet + bet;
             }
 
@@ -778,14 +801,14 @@ namespace DragonJack
             Console.SetCursorPosition(dealerPosX - 7, dealerPosY);
             dealerCards.PrintSum();
             string[] dragonjacking = new string[8];
-            dragonjacking[0] = "▄▄▄▄▄▄     ▄▄▄▄▄▄    ▄▄▄▄▄▄    ▄▄▄▄▄   ▄▄▄▄▄  ▄▄           ▄    ▄▄▄▄▄▄  ▄▄▄▄▄▄    ▄   ▄";
-            dragonjacking[1] = "██  ▀██   ██   ██   ██   ██   ██   ██ ██   ██ ██▀▀▀█▄     ██   ██   ██ ██   ██   ██ ▄█▀";
-            dragonjacking[2] = "██   ██   ██   ██   ██   ██   ██   █  ██   ██ ██   ██     ██   ██   ██ ██   ██   ██▐█▀ ";
-            dragonjacking[3] = "██   ██  ▄██▄▄▄█▀   ██   ██  ▄██      ██   ██ ██   ██     ██   ██   ██ ██       ▄███▀  ";
-            dragonjacking[4] = "██   ██ ▀▀██▀▀▀▀  ▀████████ ▀▀██ ███  ██   ██ ██   ██     ██ ▀████████ ██      ▀▀████  ";
-            dragonjacking[5] = "██   ██ ▀████████   ██   ██   ██   ██ ██   ██ ██   ██     ██   ██   ██ ██   █    ██▐█▄ ";
-            dragonjacking[6] = "██  ▄██   ██   ██   ██   ██   ██   ██ ██   ██ ██   ██ █▄ ▄██   ██   ██ ██   ██   ██ ▀█▄";
-            dragonjacking[7] = "▀▀▀▀▀▀    ██   █▀   ▀▀   ▀    ▀▀▀▀▀▀   ▀▀▀▀▀   ▀   ▀  ▀▀▀▀▀    ▀▀   ▀  ▀▀▀▀▀▀    ▀    ▀";
+            dragonjacking[0] = "▄▄▄▄▄▄     ▄▄▄▄▄▄    ▄▄▄▄▄▄    ▄▄▄▄▄   ▄▄▄▄▄  ▄▄           ▄    ▄▄▄▄▄▄  ▄▄▄▄▄▄    ▄    ▄";
+            dragonjacking[1] = "██  ▀██   ██   ██   ██   ██   ██   ██ ██   ██ ██▀▀▀█▄     ██   ██   ██ ██   ██   ██  ▄█▀";
+            dragonjacking[2] = "██   ██   ██   ██   ██   ██   ██   █  ██   ██ ██   ██     ██   ██   ██ ██   ██   ██ ▐█▀ ";
+            dragonjacking[3] = "██   ██  ▄██▄▄▄█▀   ██   ██  ▄██      ██   ██ ██   ██     ██   ██   ██ ██       ▄███▀▀  ";
+            dragonjacking[4] = "██   ██ ▀▀██▀▀▀▀  ▀████████ ▀▀██ ███  ██   ██ ██   ██     ██ ▀████████ ██      ▀▀████▄  ";
+            dragonjacking[5] = "██   ██ ▀████████   ██   ██   ██   ██ ██   ██ ██   ██     ██   ██   ██ ██   █    ██ ▐█▄ ";
+            dragonjacking[6] = "██  ▄██   ██   ██   ██   ██   ██   ██ ██   ██ ██   ██ █▄ ▄██   ██   ██ ██   ██   ██  ▀█▄";
+            dragonjacking[7] = "▀▀▀▀▀▀    ██   █▀   ▀▀   ▀    ▀▀▀▀▀▀   ▀▀▀▀▀   ▀   ▀  ▀▀▀▀▀    ▀▀   ▀  ▀▀▀▀▀▀    ▀     ▀";
             for (int i = 0; i < dragonjacking.Length; i++)
             {
                 Console.SetCursorPosition((winWidth - dragonjacking.Length) / 2 - 40, winHeight / 2 - dragonjacking.Length / 2 + i);
@@ -956,13 +979,15 @@ namespace DragonJack
                 }
                 titlePos = (winWidth - titleLength) / 2;
             }
+            Console.SetCursorPosition((winWidth - "Press ENTER to continue".Length) / 2, winHeight - 3);
+            Thread.Sleep(400);
+            Console.WriteLine("Press ENTER to continue");
 
-            //for (int i = 0; i < titleDragon.Length; i++)
-            //{
-            //    Console.SetCursorPosition(titlePos, (winHeight - titleDragon.Length) / 2 + i);
-            //    Console.WriteLine(titleDragon[i]);
-            //}
-            Console.ReadKey(true);
+            ConsoleKeyInfo key = Console.ReadKey(true);
+            while (key.Key != ConsoleKey.Enter)
+            {
+                key = Console.ReadKey(true);
+            }
 
         }
         private static void PrintArrow(int x, int y)
