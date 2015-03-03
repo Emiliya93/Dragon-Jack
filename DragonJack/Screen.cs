@@ -178,6 +178,7 @@
                     Console.WriteLine(letterDragon[j, i]);
                 }
                 titlePos += letterDragon[0, i].Length;
+                Sounds.PlaySound("swordSwoosh");
             }
             titlePos = (GlobalConsts.winWidth - titleLength) / 2;
             Thread.Sleep(500);
@@ -222,6 +223,30 @@
             Console.Clear();
             Printer.PrintDeck(GlobalConsts.winWidth - GlobalConsts.winWidth / GlobalConsts.cardWidth, (GlobalConsts.winHeight - 5) / 2);
             
+        }
+
+        public static string OutroScreen(float score, float lowestScore)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Black;
+            string name = "";
+            if (score > lowestScore)
+            {
+                Console.SetCursorPosition((GlobalConsts.winWidth - "Input your initials (max 6 characters):".Length) / 2, 4);
+                Console.Write("Input your initials (max 6 characters): ");
+                while (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || name.Length > 6)
+                {
+                    Console.SetCursorPosition((GlobalConsts.winWidth + "Input your initials (max 6 characters): ".Length) / 2, 4);
+                    Console.Write("".PadRight(name.Length + name.Length, ' '));
+                    Console.SetCursorPosition((GlobalConsts.winWidth + "Input your initials (max 6 characters): ".Length) / 2, 4);
+                    name = Console.ReadLine();
+                }
+                Console.SetCursorPosition((GlobalConsts.winWidth - "Input your initials (max 6 characters): ".Length) / 2, 4);
+                Console.Write("".PadRight("Input your initials (max 6 characters): ".Length + name.Length, ' '));
+            }
+
+            return name;
         }
 
     }

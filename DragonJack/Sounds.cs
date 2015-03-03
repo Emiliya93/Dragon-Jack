@@ -7,21 +7,19 @@
 
     public class Sounds
     {
-        private static readonly Dictionary<string, SoundPlayer> playersRef = new Dictionary<string, SoundPlayer>
+        private static readonly Dictionary<string, string> playersRef = new Dictionary<string, string>
         {
-            { "placeCard", new SoundPlayer(@"../../SoundFiles/cardPlace1.wav") },
-            { "placeChips", new SoundPlayer(@"../../SoundFiles/chipsHandle6.wav") },
-            { "scoreMusic", new SoundPlayer(@"../../SoundFiles/Loop_23.wav") },
-            { "swordClash", new SoundPlayer(@"../../SoundFiles/SwordClash.wav") }
+            { "placeCard", @"../../SoundFiles/cardPlace1.wav" },
+            { "placeChips", @"../../SoundFiles/chipsHandle6.wav" },
+            { "scoreMusic", @"../../SoundFiles/Loop_23.wav" },
+            { "swordClash", @"../../SoundFiles/SwordClash.wav" },
+            { "swordSwoosh", @"../../SoundFiles/Swoosh01.wav" }
         };
-        public static void LoadSounds(Dictionary<string, SoundPlayer> playersRef)
+        private static void LoadSound(SoundPlayer player)
         {
             try
             {
-                foreach (KeyValuePair<string, SoundPlayer> entry in playersRef)
-                {
-                    entry.Value.Load();
-                }
+                player.Load();
             }
             catch (TimeoutException ex)
             {
@@ -36,21 +34,29 @@
 
         public static void PlaySound(string sound)
         {
-            playersRef[sound].Play();
+            SoundPlayer player = new SoundPlayer(playersRef[sound]);
+            LoadSound(player);
+            player.Play();
+            player.Dispose();
             
         }
         public static void PlayMusic(string sound)
         {
-            LoadSounds(playersRef);
-            SoundPlayer player =  playersRef[sound];
+            SoundPlayer player = new SoundPlayer(playersRef[sound]);
+            LoadSound(player);
             player.PlayLooping();
             ConsoleKeyInfo key = new ConsoleKeyInfo();
             key = Console.ReadKey(true);
             while (key.Key != ConsoleKey.Enter || key.Key != ConsoleKey.Escape)
             {
                 key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter || key.Key == ConsoleKey.Escape)
+                {
+                    player.Stop();
+                    player.Dispose();
+                    break;
+                }
             }
-            player.Stop();
         }
     }
 }

@@ -31,7 +31,6 @@
                     string input = "";
                     Console.SetCursorPosition(x - funds.ToString().Length / 2, y);
                     input = Console.ReadLine();
-                    Sounds.PlaySound("placeChips");
                     if (string.IsNullOrEmpty(input))
                     {
                         input = placedBet.ToString();
@@ -91,6 +90,7 @@
                     bet = 0;
                 }
             }
+            Sounds.PlaySound("placeChips");
             return bet;
         }
 
@@ -406,9 +406,6 @@
         }
         public static void KeepingScore(float score)
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Black;
             List<KeyValuePair<string, float>> list = new List<KeyValuePair<string, float>>();
             string filePath = @"..\..\Score.txt";
             string[] lines = ReadingFile(filePath);
@@ -418,18 +415,11 @@
                 nameScore = l.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 list.Add(new KeyValuePair<string, float>(nameScore[0], float.Parse(nameScore[1])));
             }
+
             string name = "";
-            if (score > float.Parse(nameScore[1]))
-            {
-                Console.SetCursorPosition((GlobalConsts.winWidth - "Input your initials (max 6 characters):".Length) / 2, 4);
-                Console.Write("Input your initials (max 6 characters): ");
-                while (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || name.Length > 6)
-                {
-                    name = Console.ReadLine();
-                }
-                Console.SetCursorPosition((GlobalConsts.winWidth - "Input your initials (max 6 characters): ".Length) / 2, 4);
-                Console.Write("".PadRight("Input your initials (max 6 characters): ".Length + name.Length, ' '));
-            }
+
+            Screen.OutroScreen(score, float.Parse(nameScore[1]));
+
             list.Add(new KeyValuePair<string, float>(name, score));
             list = list.OrderByDescending(x => x.Value).ToList();
             list.RemoveAt(10);
@@ -445,10 +435,9 @@
             }
             WritingFile(filePath, sb.ToString());
             Sounds.PlayMusic("scoreMusic");
-
         }
 
-        public static string[] ReadingFile(string path)
+        private static string[] ReadingFile(string path)
         {
             string[] fileLines = new string[1];
             try
@@ -477,7 +466,7 @@
             
         }
 
-        public static string[] WritingFile(string path, string text)
+        private static string[] WritingFile(string path, string text)
         {
             string[] fileLines = new string[1];
             try

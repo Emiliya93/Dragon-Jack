@@ -1,10 +1,10 @@
-GB        1450
-GB        1250
-GB        1100
-GB        1100
-GB        1100
-GB        1100
-GB        1100
+GB        2500
+bot       1000
+bot       1000
+bot       1000
+bot       1000
+bot       1000
+bot       1000
 bot       1000
 bot       1000
 bot       1000
