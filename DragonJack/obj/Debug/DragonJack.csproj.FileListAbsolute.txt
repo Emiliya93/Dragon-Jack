@@ -22,3 +22,9 @@ C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragon
 C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\bin\Debug\DragonJack.exe
 C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\bin\Debug\DragonJack.pdb
 C:\Users\ilia\Documents\Visual Studio 2013\Projects\C#2\GitHub-stuff\GhostDragonsDragon-Jack\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
+E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.exe.config
+E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.exe
+E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.pdb
+E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.exe
+E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.pdb
+E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
