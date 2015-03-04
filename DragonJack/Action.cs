@@ -417,7 +417,7 @@
             }
 
             string name = "";
-            Screen.OutroScreen(score, float.Parse(nameScore[1]));
+            name = Screen.OutroScreen(score, float.Parse(nameScore[1]));
 
             list.Add(new KeyValuePair<string, float>(name, score));
             list = list.OrderByDescending(x => x.Value).ToList();
