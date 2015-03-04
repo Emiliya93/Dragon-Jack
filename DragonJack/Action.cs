@@ -39,12 +39,12 @@
                     betEntered = true;
                     Console.SetCursorPosition(x - funds.ToString().Length / 2, y);
                     Console.Write("".PadRight(10, ' '));
-                    
-                    if (bet > funds)
+
+                    if (bet - funds > 0.00001)
                     {
                         throw new ArgumentOutOfRangeException();
                     }
-                    if (bet <= 0)
+                    if (bet - 0.009 < 0.00001)
                     {
                         throw new ArgumentNullException();
                     }
