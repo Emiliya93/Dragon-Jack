@@ -28,3 +28,9 @@ E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.pdb
 E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.exe
 E:\visual studio 2013\GitHub\DragonJack\bin\Debug\DragonJack.pdb
 E:\visual studio 2013\GitHub\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache
+C:\Users\PavelPC\Desktop\Dragon-Jack-master\Dragon-Jack-master\DragonJack\bin\Debug\DragonJack.exe.config
+C:\Users\PavelPC\Desktop\Dragon-Jack-master\Dragon-Jack-master\DragonJack\obj\Debug\DragonJack.exe
+C:\Users\PavelPC\Desktop\Dragon-Jack-master\Dragon-Jack-master\DragonJack\obj\Debug\DragonJack.pdb
+C:\Users\PavelPC\Desktop\Dragon-Jack-master\Dragon-Jack-master\DragonJack\bin\Debug\DragonJack.exe
+C:\Users\PavelPC\Desktop\Dragon-Jack-master\Dragon-Jack-master\DragonJack\bin\Debug\DragonJack.pdb
+C:\Users\PavelPC\Desktop\Dragon-Jack-master\Dragon-Jack-master\DragonJack\obj\Debug\DragonJack.csprojResolveAssemblyReference.cache

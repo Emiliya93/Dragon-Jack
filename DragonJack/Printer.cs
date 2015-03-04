@@ -59,6 +59,7 @@
                 Console.WriteLine(dragonjacking[i]);
             }
             Sounds.PlaySound("dragonjack");
+            Console.ReadKey(true);
         }
         
         // Print and delete legend methods
@@ -94,7 +95,7 @@
                 options.Add("Space ► Split");
             }
 
-            else if (cardCount > 2)
+            else if (cardCount > 2 && funds >= bet)
             {
                 options.RemoveAt(options.Count - 1);
                 DeleteLegend();
