@@ -1,5 +1,5 @@
-bot       1000
-bot       1000
+peshka    1492
+gosho     1010
 bot       1000
 bot       1000
 bot       1000

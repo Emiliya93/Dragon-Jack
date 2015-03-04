@@ -255,7 +255,7 @@
             }
 
             string name = "";
-            if (score > lowestScore)
+            if (score > 500)
             {
                 Console.SetCursorPosition((GlobalConsts.winWidth - "Input your initials (max 6 characters):".Length) / 2, 4);
                 Console.Write("Input your initials (max 6 characters): ");
